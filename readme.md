@@ -1,6 +1,6 @@
-NodeGit-Kit
-===
+# NodeGit-Kit
 
+An incomplete set of NodeGit helper promises. Please don't use this in production yet. Comments are welcome: https://github.com/thisconnect/nodegit-kit/issues
 
 ```javascript
 
