@@ -1,0 +1,12 @@
+{
+  "name": "nodegit-kit",
+  "version": "0.0.0",
+  "main": "lib/index",
+  "scripts": {
+  },
+  "dependencies": {
+    "nodegit": "^0.4.1"
+  },
+  "license": "MIT",
+  "devDependencies": {}
+}
