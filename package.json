@@ -1,11 +1,25 @@
 {
   "name": "nodegit-kit",
-  "version": "0.0.1",
+  "description": "An incomplete set of NodeGit helper promises",
+  "version": "0.0.2",
   "main": "lib/index",
   "repository": {
     "type": "git",
     "url": "git://github.com/thisconnect/nodegit-kit.git"
   },
+  "keywords": [
+    "git",
+    "nodegit",
+    "libgit2",
+    "commit",
+    "log",
+    "status",
+    "diff",
+    "repo",
+    "repositories",
+    "source",
+    "source control"
+  ],
   "scripts": {
     "test": "DEBUG=* node ./test/index.js",
     "clean": "rimraf ./test/repo/"
