@@ -62,10 +62,12 @@ open('../repo-path/new/or/existing')
 
 ### git config
 
+This is optional, if not configured, config tries to read your global git config.
+
 ```javascript
 var kit = require('nodegit-kit');
 
-var open = kit.config;
+var config = kit.config;
 
 config.set({
     'user': {
