@@ -2,11 +2,21 @@
   "name": "nodegit-kit",
   "version": "0.0.0",
   "main": "lib/index",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thisconnect/nodegit-kit.git"
+  },
   "scripts": {
+    "test": "DEBUG=* node ./test/index.js",
+    "clean": "rimraf ./test/repo/"
   },
   "dependencies": {
+    "mkdirp": "^0.5.1",
     "nodegit": "^0.4.1"
   },
   "license": "MIT",
-  "devDependencies": {}
+  "devDependencies": {
+    "debug": "^2.2.0",
+    "rimraf": "^2.4.3"
+  }
 }
