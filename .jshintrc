@@ -1,0 +1,9 @@
+{
+    "asi": false,
+    "quotmark": "single",
+    "eqnull": true,
+    "globals": {
+        "Promise": true
+    },
+    "node": true
+}
