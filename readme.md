@@ -30,7 +30,9 @@ open('../repo-path/new/or/existing')
 })
 .then(function(repo){
     // git commit -am"commit message"
-    return commit(repo);
+    return commit(repo, {
+        'message': 'commit message'
+    });
 })
 .then(function(repo){
     // git log
@@ -44,6 +46,7 @@ open('../repo-path/new/or/existing')
 });
 ```
 
+### git status
 
 ```javascript
 open('../repo-path/new/or/existing')
@@ -55,5 +58,19 @@ open('../repo-path/new/or/existing')
        return repo;
     })
 })
+```
 
+### git config
+
+```javascript
+var kit = require('nodegit-kit');
+
+var open = kit.config;
+
+config.set({
+    'user': {
+        'name': 'username',
+        'email': 'user@localhost'
+    }
+});
 ```
