@@ -3,8 +3,6 @@ NodeGit-Kit
 
 An incomplete set of NodeGit helper promises. Please don't use this in production yet.
 
-![NodeGit-Kit example log](https://raw.github.com/thisconnect/nodegit-kit/master/log.png)
-
 Comments are welcome: https://github.com/thisconnect/nodegit-kit/issues
 
 ```javascript
@@ -76,3 +74,11 @@ config.set({
     }
 });
 ```
+
+## Example
+
+```bash
+npm test
+```
+
+![NodeGit-Kit example log](https://raw.github.com/thisconnect/nodegit-kit/master/log.png)
