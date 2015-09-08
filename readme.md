@@ -6,21 +6,15 @@ An incomplete set of NodeGit helper promises. Please don't use this in productio
 Comments are welcome: https://github.com/thisconnect/nodegit-kit/issues
 
 ```javascript
-var kit = require('nodegit-kit');
+var git = require('nodegit-kit');
 
-var open = kit.open;
-var commit = kit.commit;
-var diff = kit.diff;
-var log = kit.log;
-var status = kit.status;
-
-open('../repo-path/new/or/existing')
+git.open('../repo-path/new/or/existing')
 .then(function(repo){
     return repo;
 })
 .then(function(repo){
      // git diff
-    return diff(repo)
+    return git.diff(repo)
     .then(function(diff){
         // console.log(diff);
         return repo;
@@ -28,13 +22,13 @@ open('../repo-path/new/or/existing')
 })
 .then(function(repo){
     // git commit -am"commit message"
-    return commit(repo, {
+    return git.commit(repo, {
         'message': 'commit message'
     });
 })
 .then(function(repo){
     // git log
-    return log(repo);
+    return git.log(repo);
 })
 .then(function(log){
     // console.log(log);
@@ -47,10 +41,10 @@ open('../repo-path/new/or/existing')
 ### git status
 
 ```javascript
-open('../repo-path/new/or/existing')
+git.open('../repo-path/new/or/existing')
 .then(function(repo){
      // git status
-    return status(repo)
+    return git.status(repo)
     .then(function(status){
        console.log(status);
        return repo;
@@ -63,11 +57,7 @@ open('../repo-path/new/or/existing')
 This is optional, if not configured, config tries to read your global git config.
 
 ```javascript
-var kit = require('nodegit-kit');
-
-var config = kit.config;
-
-config.set({
+git.config.set({
     'user': {
         'name': 'username',
         'email': 'user@localhost'
