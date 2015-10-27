@@ -22,12 +22,14 @@
     "clean": "rimraf ./test/repo/"
   },
   "dependencies": {
+    "debug": "^2.2.0",
     "mkdirp": "^0.5.1",
     "nodegit": "^0.5.0"
   },
   "license": "MIT",
   "devDependencies": {
-    "debug": "^2.2.0",
-    "rimraf": "^2.4.3"
+    "rimraf": "^2.4.3",
+    "tap-spec": "^4.1.0",
+    "tape": "^4.2.2"
   }
 }
