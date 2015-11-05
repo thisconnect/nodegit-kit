@@ -1,34 +1,33 @@
 {
   "name": "nodegit-kit",
-  "description": "Super simple NodeKit promisses",
+  "description": "Super simple NodeGit promisses",
   "version": "0.0.5",
-  "main": "lib/index",
+  "main": "lib/main.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/thisconnect/nodegit-kit.git"
   },
   "keywords": [
-    "git",
-    "nodegit",
-    "libgit2",
+    "promise",
     "commit",
     "log",
     "status",
     "diff",
-    "repo"
+    "repo",
+    "libgit2",
+    "nodegit",
+    "git"
   ],
   "scripts": {
-    "test": "DEBUG=* node ./test/index.js",
-    "clean": "rimraf ./test/repo/"
+    "test": "tape ./test/test.js | tap-spec"
   },
   "dependencies": {
     "debug": "^2.2.0",
-    "mkdirp": "^0.5.1",
+    "fildes": "^0.5.3",
     "nodegit": "^0.5.0"
   },
   "license": "MIT",
   "devDependencies": {
-    "rimraf": "^2.4.3",
     "tap-spec": "^4.1.0",
     "tape": "^4.2.2"
   }
