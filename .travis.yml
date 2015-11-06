@@ -1,7 +1,16 @@
-sudo: false
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
+before_install:
+  - export CXX="g++-4.9"
 language: node_js
 node_js:
   - '4.2'
   - 'stable'
 os:
   - linux
+sudo: false
