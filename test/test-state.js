@@ -64,6 +64,7 @@ tape('status', function(t){
     })
     .catch(function(err){
         t.error(err);
+        t.end();
     });
 });
 
@@ -82,5 +83,6 @@ tape.only('diff', function(t){
     })
     .catch(function(err){
         t.error(err);
+        t.end();
     });
 });

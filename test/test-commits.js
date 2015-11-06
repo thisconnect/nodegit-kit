@@ -14,6 +14,7 @@ tape('commit setup', function(t){
     })
     .catch(function(err){
         t.error(err);
+        t.end();
     });
 });
 
