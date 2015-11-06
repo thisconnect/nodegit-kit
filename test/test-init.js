@@ -25,7 +25,7 @@ tape('init setup', function(t){
 
 
 tape('init error', function(t){
-    files.writeFile(dir)
+    files.writeFile(dir, '')
     .then(function(){
         return git.init(dir);
     })
@@ -35,17 +35,17 @@ tape('init error', function(t){
     })
     .catch(function(error){
         t.ok(error, error);
+        return files.rmdir(dir);
+    })
+    .then(function(){
         t.end();
     });
 });
 
 
 tape('init', function(t){
-    files.unlink(dir)
-    .then(function(){
-        return git.init(dir, {
-            'message': 'the very first commit'
-        });
+    git.init(dir, {
+        'message': 'the very first commit'
     })
     .then(function(repo){
         t.ok(repo, 'initialized repository');
