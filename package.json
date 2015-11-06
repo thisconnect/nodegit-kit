@@ -1,6 +1,6 @@
 {
   "name": "nodegit-kit",
-  "description": "Super simple NodeGit promisses",
+  "description": "Promises for git commands like init, add, commit, status, diff",
   "version": "0.0.5",
   "main": "lib/main.js",
   "repository": {
