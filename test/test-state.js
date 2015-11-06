@@ -68,7 +68,7 @@ tape('status', function(t){
     });
 });
 
-tape.only('diff', function(t){
+tape('diff', function(t){
 
     git.open(dir)
     .then(function(repo){
