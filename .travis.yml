@@ -7,8 +7,12 @@ addons:
       - gcc-4.9
       - g++-4.9
 before_install:
+  - gcc --version
+  - g++ --version
   - export CC="gcc-4.9"
   - export CXX="g++-4.9"
+  - export LINK="gcc-4.9";
+  - export LINKXX="g++-4.9";
   - git config --global user.name travis
   - git config --global user.email travis@locahost
 language: node_js
