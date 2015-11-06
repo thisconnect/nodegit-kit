@@ -1,7 +1,5 @@
 'use strict';
 
-var debug = require('debug')('test');
-
 var git = require('../');
 
 git.config.set({
@@ -11,7 +9,7 @@ git.config.set({
     }
 });
 
-git.open('test/repo') // returns repo
+git.open('./test/repos/all') // returns repo
 .then(function(repo){
     return repo;
 })

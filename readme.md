@@ -4,9 +4,16 @@ NodeGit-Kit
 [![Dependencies](https://img.shields.io/david/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit)
 [![Dev Dependencies](https://img.shields.io/david/dev/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit#info=devDependencies)
 
-An incomplete set of NodeGit helper promises. Please don't use this in production yet.
+Comments are welcome at [nodegit-kit/issues](https://github.com/thisconnect/nodegit-kit/issues)
 
-Comments are welcome at [github.com/thisconnect/nodegit-kit/issues](https://github.com/thisconnect/nodegit-kit/issues)
+### Install
+
+```bash
+npm i --save nodegit-kit
+```
+
+
+### Usage
 
 ```javascript
 var git = require('nodegit-kit');
@@ -68,10 +75,16 @@ git.config.set({
 });
 ```
 
-## Example
+### Test
 
 ```bash
-npm test
-```
+npm install
 
-![NodeGit-Kit example log](https://raw.github.com/thisconnect/nodegit-kit/master/log.png)
+npm test
+
+# debug nodegit-kit
+DEBUG=kit* npm test
+
+# debug all
+DEBUG=* npm test
+```
