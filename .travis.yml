@@ -5,12 +5,12 @@ addons:
     packages:
       - gcc-4.9
       - g++-4.9
-      - libc6-dev
 before_install:
   - export CC="gcc-4.9"
   - export CXX="g++-4.9"
   - git config --global user.name travis
   - git config --global user.email travis@locahost
+  - BUILD_ONLY=true npm install
 language: node_js
 node_js:
   - '4.2'
