@@ -8,9 +8,9 @@ addons:
 before_install:
   - export CC="gcc-4.9"
   - export CXX="g++-4.9"
+  - BUILD_ONLY=true npm install
   - git config --global user.name travis
   - git config --global user.email travis@locahost
-  - BUILD_ONLY=true npm install
 cache:
   directories:
     - node_modules
