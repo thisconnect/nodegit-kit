@@ -1,11 +1,12 @@
 NodeGit-Kit
 -----------
 
+[![Build Status](https://img.shields.io/travis/thisconnect/nodegit-kit/master.svg?style=flat-square)](https://travis-ci.org/thisconnect/nodegit-kit)
 [![Dependencies](https://img.shields.io/david/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit)
 [![Dev Dependencies](https://img.shields.io/david/dev/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit#info=devDependencies)
 
 Promises for git commands such as `git init`,
-`git status`, `git add *`, `git diff`, `git commit -am"commit message"` and `git log`.
+`git status`, `git add *`, `git diff`, `git log` and `git commit -am"commit message"`.
 
 Comments are welcome at [nodegit-kit/issues](https://github.com/thisconnect/nodegit-kit/issues)
 
