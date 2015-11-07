@@ -11,11 +11,6 @@ before_install:
   - git config --global user.name travis
   - git config --global user.email travis@locahost
   - BUILD_ONLY=true npm install
-cache:
-  directories:
-    - $HOME/.node-gyp
-    - $HOME/.npm
-    - node_modules/nodegit
 language: node_js
 node_js:
   - '4.2'
