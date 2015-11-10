@@ -16,8 +16,14 @@ tape('state setup', function(t){
     .then(function(){
         return Promise.all([
             files.write(file1, 'a\nb\nc\nd\n'),
-            files.write(file2, '1\n2\n3\n4\n5\n6\n')
-        ]);
+            files.write(file2, '1\n2\n3\n4\n5\n6\n7\n8\n9\n')
+        ])
+        .then(function(){
+            return files.appendFile(file2, '10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n');
+        })
+        .then(function(){
+            return files.appendFile(file2, '20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n');
+        });
     })
     .then(function(){
         return git.open(dir);
@@ -29,6 +35,9 @@ tape('state setup', function(t){
         return Promise.all([
             files.write(file2, '3.1', {
                 position: 4
+            }),
+            files.write(file2, '18', {
+                position: 28
             }),
             files.writeFile(file3, 'foo\nbar\n')
         ]);
@@ -70,15 +79,20 @@ tape('status', function(t){
 
 
 tape('diff', function(t){
-
     git.open(dir)
     .then(function(repo){
         return git.diff(repo);
     })
     .then(function(changes){
-        console.log(changes);
         changes.forEach(function(change){
-            if (change.diff) console.log(change.diff);
+            t.ok(change.path, 'has path');
+            t.ok(change.size, 'has size');
+            t.ok(change.status, 'has status');
+            if (change.status == 'modified'){
+                t.ok(change.oldsize, 'has old size');
+                t.ok(Array.isArray(change.hunks), 'hunks is an Array');
+                t.ok(change.hunks.length > 0, 'has at least 1 diff');
+            }
         });
         t.end();
     })
