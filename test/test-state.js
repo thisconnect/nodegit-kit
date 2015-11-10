@@ -36,8 +36,8 @@ tape('state setup', function(t){
             files.write(file2, '3.1', {
                 position: 4
             }),
-            files.write(file2, '18', {
-                position: 28
+            files.write(file2, '52', {
+                position: 63
             }),
             files.writeFile(file3, 'foo\nbar\n')
         ]);
