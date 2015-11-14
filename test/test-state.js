@@ -1,7 +1,6 @@
 var git = require('../');
 
 var tape = require('tape');
-var Git = require('nodegit');
 var files = require('fildes');
 var resolve = require('path').resolve;
 
@@ -12,18 +11,17 @@ var file3 = resolve(dir, 'file3.txt');
 
 
 tape('state setup', function(t){
+
+    var data2 = '1\n2\n3\n4\n5\n6\n7\n8\n9\n'
+        + '10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n'
+        + '20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n';
+
     files.rmdir(dir)
     .then(function(){
         return Promise.all([
             files.write(file1, 'a\nb\nc\nd\n'),
-            files.write(file2, '1\n2\n3\n4\n5\n6\n7\n8\n9\n')
-        ])
-        .then(function(){
-            return files.appendFile(file2, '10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n');
-        })
-        .then(function(){
-            return files.appendFile(file2, '20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n');
-        });
+            files.write(file2, data2)
+        ]);
     })
     .then(function(){
         return git.open(dir);
