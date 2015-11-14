@@ -1,18 +1,19 @@
 var git = require('../');
 
 var tape = require('tape');
-var Git = require('nodegit');
 var files = require('fildes');
 var resolve = require('path').resolve;
 
 var dir = resolve(__dirname, './repos/init');
 var bare = resolve(__dirname, './repos/init-bare.git');
+var manual = resolve(__dirname, './repos/init-manual');
 
 
 tape('init setup', function(t){
     Promise.all([
         files.rmdir(dir),
-        files.rmdir(bare)
+        files.rmdir(bare),
+        files.rmdir(manual)
     ])
     .then(function(){
         t.end();
@@ -78,6 +79,40 @@ tape('init bare', function(t){
     .then(function(repo){
         t.ok(repo, 'initialized bare repository');
         t.end();
+    })
+    .catch(function(error){
+        t.error(error);
+        t.end();
+    });
+});
+
+
+tape('init without commit', function(t){
+    git.init(manual, {
+        'commit': false
+    })
+    .then(function(repo){
+        t.ok(repo, 'initialized repository without first commit');
+        // add files or change configs before first commit
+        return repo.getMasterCommit()
+        .then(function(master){
+            t.fail('should have no master commit yet');
+            t.end();
+        })
+        .catch(function(error){
+            t.ok(error, error);
+            // manually do first commit
+            return git.init.commit(repo);
+        })
+        .then(function(oid){
+            t.ok(oid, 'has oid');
+            return repo.getMasterCommit()
+            .then(function(commit){
+                t.ok(commit, 'has master commit');
+                t.deepEqual(oid, commit.id(), 'same Oid');
+                t.end();
+            });
+        });
     })
     .catch(function(error){
         t.error(error);
