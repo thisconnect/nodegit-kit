@@ -24,46 +24,44 @@ var git = require('nodegit-kit');
 
 git.open('../repo-path/new/or/existing')
 .then(function(repo){
-    return repo;
-})
-.then(function(repo){
+
      // git diff
     return git.diff(repo)
     .then(function(diff){
-        // console.log(diff);
-        return repo;
+        console.log(diff);
+
+        // git commit -am"commit message"
+        return git.commit(repo, {
+            'message': 'commit message'
+        });
+    })
+    .then(function(){
+        // git log
+        return git.log(repo);
+    })
+    .then(function(log){
+        console.log(log);
     });
-})
-.then(function(repo){
-    // git commit -am"commit message"
-    return git.commit(repo, {
-        'message': 'commit message'
-    });
-})
-.then(function(repo){
-    // git log
-    return git.log(repo);
-})
-.then(function(log){
-    // console.log(log);
 })
 .catch(function(error){
-    console.error(error.stack);
+    console.error(error);
 });
 ```
+
 
 ### git status
 
 ```javascript
 git.open('../repo-path/new/or/existing')
 .then(function(repo){
-     // git status
+    // git status
     return git.status(repo);
 })
 .then(function(status){
-   // console.log(status);
+    console.log(status);
 });
 ```
+
 
 ### git config
 
@@ -77,6 +75,7 @@ git.config.set({
     }
 });
 ```
+
 
 ### Test
 
