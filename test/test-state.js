@@ -26,9 +26,6 @@ tape('state setup', function(t){
     .then(function(){
         return git.open(dir);
     })
-    .then(function(repo){
-        return git.commit(repo);
-    })
     .then(function(){
         return Promise.all([
             files.write(file2, '3.1', {
