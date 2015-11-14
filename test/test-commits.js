@@ -30,7 +30,9 @@ tape('commit three times', function(t){
                 'message': 'test commit'
             });
         })
-        .then(function(){
+        .then(function(oid){
+            t.ok(oid, 'has oid');
+            t.ok(oid.toString().length == 40, 'oid has 40 bytes');
             return files.writeFile(filepath, 'test2\n');
         })
         .then(function(){
@@ -38,14 +40,14 @@ tape('commit three times', function(t){
                 'message': 'second commit'
             });
         })
-        .then(function(){
+        .then(function(oid){
             return files.writeFile(filepath, 'test3\n');
         })
         .then(function(){
             return git.commit(repo);
         });
     })
-    .then(function(){
+    .then(function(oid){
         t.pass('commited file');
         t.end();
     })
