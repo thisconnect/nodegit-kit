@@ -14,6 +14,7 @@
     "status",
     "diff",
     "repo",
+    "repository",
     "libgit2",
     "nodegit",
     "git"
