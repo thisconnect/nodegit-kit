@@ -49,21 +49,125 @@ git.open('../repo-path/new/or/existing')
 ```
 
 
-### git status
+## API
+
+- [open](#open-path-options)
+- [init](#init-path-options)
+- [commit](#commit-repo-options)
+- [status](#status-repo)
+- [diff](#diff-repo)
+- [log](#log-repo)
+- [config](#config)
+
+
+### open (path[, options])
+
+Returns repository, if no repo is found, creates dir and initializes repository.
+
+- `path` String
+- `options` Object
+  - `init` Boolean defaults to true
+
+```javascript
+git.open('../repo-path/new/or/existing', {
+    init: false
+})
+.then(function(repo){
+});
+```
+
+
+### init (path[, options])
+
+Ensures directory exists, initializes, creates a first commit and returns repo.
+
+- `path` String
+- `options` Object
+  - `bare` Number defaults to 0
+  - `commit` Boolean defaults to true
+  - `message` String defaults to 'initial commit'
+
+```javascript
+git.init('../repo-path/new/or/existing', {
+    base: 0,
+    commit: true,
+    message: 'my first commit'
+})
+.then(function(repo){
+});
+```
+
+
+### commit (repo[, options])
+
+Checks if status has pending changes, commits, returns Oid else returns null.
+
+- `repo` NodeGit Repository instance
+- `options`
+  - `message` String defaults to 'update'
+
+```javascript
+git.open('../repo-path/new/or/existing')
+.then(function(repo){
+    // git commit -am"a new commit"
+    return git.commit(repo, {
+        message: 'a new commit'
+    })
+    .then(function(oid){
+        console.log(oid);
+    });
+});
+```
+
+
+### status (repo)
+
+Returns an Array of changed files and their status.
 
 ```javascript
 git.open('../repo-path/new/or/existing')
 .then(function(repo){
     // git status
-    return git.status(repo);
-})
-.then(function(status){
-    console.log(status);
+    return git.status(repo)
+    .then(function(status){
+        console.log(status);
+    });
 });
 ```
 
 
-### git config
+### diff (repo)
+
+Returns an Array of modified files and their diffs.
+
+```javascript
+git.open('../repo-path/new/or/existing')
+.then(function(repo){
+    // git diff
+    return git.diff(repo)
+    .then(function(diff){
+        console.log(diff);
+    });
+});
+```
+
+
+### log (repo)
+
+Returns an Array of all commits.
+
+```javascript
+git.open('../repo-path/new/or/existing')
+.then(function(repo){
+    // git log
+    return git.log(repo)
+    .then(function(log){
+        console.log(log);
+    });
+});
+```
+
+### config
 
 Allows to write/read global and local values.
 Local values are stored in the Git directory `./git/config` and overrule global configurations.
@@ -91,6 +195,7 @@ git.open('my/repository')
 });
 ```
 
+
 #### Example reading user.name and user.email
 
 Similar to `git config user.name` returns config for a repository if there any or else the global Git configuration.
@@ -116,7 +221,6 @@ git.config.get(['user.name', 'user.email'])
     // [ 'John Doe', 'johndoe@example.com' ]
 });
 ```
-
 
 ```javascript
 // warning this will change your global git config
