@@ -48,7 +48,7 @@ tape('init with local user config', function(t){
 
             return repo.getMasterCommit()
             .then(function(master){
-                var history = master.history()
+                var history = master.history();
                 history.on('commit', function(commit){
                     var author = commit.author();
                     t.equal(author.name(), 'test', 'author name is test');
@@ -165,7 +165,7 @@ tape('init without local user config', function(t){
         return repo.getMasterCommit();
     })
     .then(function(master){
-        var history = master.history()
+        var history = master.history();
         history.on('commit', function(commit){
             var author = commit.author();
             t.ok(author.name(), author.name());
