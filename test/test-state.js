@@ -24,7 +24,7 @@ tape('state setup', function(t){
         ]);
     })
     .then(function(){
-        return git.open(dir);
+        return git.init(dir);
     })
     .then(function(){
         return Promise.all([
@@ -48,7 +48,6 @@ tape('state setup', function(t){
 
 
 tape('status', function(t){
-
     git.open(dir)
     .then(function(repo){
         return git.status(repo);
@@ -79,6 +78,7 @@ tape('diff', function(t){
         return git.diff(repo);
     })
     .then(function(changes){
+        t.ok(Array.isArray(changes), 'changes is an Array');
         changes.forEach(function(change){
             t.ok(change.path, 'has path');
             t.ok(change.size, 'has size');
