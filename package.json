@@ -20,16 +20,19 @@
     "git"
   ],
   "scripts": {
-    "test": "tape ./test/test.js | tap-spec"
+    "test": "tape ./test/test.js | tap-spec",
+    "coverage": "istanbul cover test/test.js | tap-spec"
   },
   "dependencies": {
     "debug": "^2.2.0",
-    "fildes": "^0.7.0",
+    "fildes": "^1.0.0",
     "nodegit": "^0.5.0"
   },
   "license": "MIT",
   "devDependencies": {
-    "tap-spec": "^4.1.0",
+    "fildes-extra": "^0.2.0",
+    "istanbul": "^0.4.1",
+    "tap-spec": "^4.1.1",
     "tape": "^4.2.2"
   }
 }
