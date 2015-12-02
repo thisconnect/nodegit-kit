@@ -1,7 +1,7 @@
 var git = require('../');
 
 var tape = require('tape');
-var files = require('fildes');
+var files = require('fildes-extra');
 var resolve = require('path').resolve;
 
 var dir1 = resolve(__dirname, './repos/config');

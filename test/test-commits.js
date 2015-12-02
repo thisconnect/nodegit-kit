@@ -1,7 +1,7 @@
 var git = require('../');
 
 var tape = require('tape');
-var files = require('fildes');
+var files = require('fildes-extra');
 var resolve = require('path').resolve;
 
 var dir = resolve(__dirname, 'repos/commits');
@@ -63,19 +63,59 @@ tape('log commits', function(t){
     .then(function(repo){
         return git.log(repo, {
             sort: 'time'
+        })
+        .then(function(history){
+            t.ok(Array.isArray(history), 'has history');
+            t.equal(history.length, 4, 'has 4 commits');
+            t.equal(history.pop().message, 'initial commit', 'last entry is initial commit');
+            t.end();
         });
-    })
-    .then(function(history){
-        t.ok(Array.isArray(history), 'has history');
-        t.equal(history.length, 4, 'has 4 commits');
-        t.equal(history.pop().message, 'initial commit', 'last entry is initial commit');
-        t.end();
     })
     .catch(function(error){
         t.error(error);
         t.end();
     });
 });
+
+/*
+tape('log diff', function(t){
+    git.open(dir)
+    .then(function(repo){
+        return git.log(repo)
+        .then(function(history){
+            return history.map(function(log){
+                return log.commit;
+            });
+        })
+        .then(function(commits){
+            console.log(commits);
+
+            return git.diff(repo)
+        })
+        .then(function(changes){
+            t.ok(Array.isArray(changes), 'changes is an Array');
+            changes.forEach(function(change){
+                t.ok(change.path, 'has path');
+                t.ok(change.size, 'has size');
+                t.ok(change.status, 'has status');
+                if (change.status == 'modified'){
+                    t.ok(change.oldsize, 'has old size');
+                    t.ok(Array.isArray(change.hunks), 'hunks is an Array');
+                    t.ok(change.hunks.length > 0, 'has at least 1 diff');
+                }
+            });
+            return repo;
+        });
+    })
+    .then(function(){
+        t.end();
+    })
+    .catch(function(err){
+        t.error(err);
+        t.end();
+    });
+});
+*/
 
 
 tape('commit nothing', function(t){
