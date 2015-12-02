@@ -1,7 +1,7 @@
 var git = require('../');
 
 var tape = require('tape');
-var files = require('fildes');
+var files = require('fildes-extra');
 var resolve = require('path').resolve;
 
 var dir = resolve(__dirname, './repos/state');
@@ -10,16 +10,18 @@ var file2 = resolve(dir, 'file2.txt');
 var file3 = resolve(dir, 'file3.txt');
 
 
+var data1 = 'a\nb\nc\nd\n';
+var data2 = '1\n2\n3\n4\n5\n6\n7\n8\n9\n'
+    + '10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n'
+    + '20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n';
+var data3 = 'foo\nbar\n';
+
+
 tape('state setup', function(t){
-
-    var data2 = '1\n2\n3\n4\n5\n6\n7\n8\n9\n'
-        + '10\n11\n12\n13\n14\n15\n16\n17\n18\n19\n'
-        + '20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n';
-
     files.rmdir(dir)
     .then(function(){
         return Promise.all([
-            files.write(file1, 'a\nb\nc\nd\n'),
+            files.write(file1, data1),
             files.write(file2, data2)
         ]);
     })
@@ -34,7 +36,7 @@ tape('state setup', function(t){
             files.write(file2, '52', {
                 position: 63
             }),
-            files.writeFile(file3, 'foo\nbar\n')
+            files.writeFile(file3, data3)
         ]);
     })
     .then(function(){
@@ -72,6 +74,10 @@ tape('status', function(t){
 });
 
 
+var hunk1 = '@@ -1,7 +1,6 @@\n 1\n 2\n-3\n-4\n+3.1\n 5\n 6\n 7';
+var hunk2 = '@@ -22,7 +21,7 @@\n 22\n 23\n 24\n-25\n+52\n 26\n 27\n 28';
+
+
 tape('diff', function(t){
     git.open(dir)
     .then(function(repo){
@@ -83,15 +89,97 @@ tape('diff', function(t){
             t.ok(change.path, 'has path');
             t.ok(change.size, 'has size');
             t.ok(change.status, 'has status');
-            if (change.status == 'modified'){
-                t.ok(change.oldsize, 'has old size');
-                t.ok(Array.isArray(change.hunks), 'hunks is an Array');
-                t.ok(change.hunks.length > 0, 'has at least 1 diff');
-            }
+
+            if (change.status != 'modified') return;
+            t.equal(change.size, 78, 'size is 78');
+            t.equal(change.oldsize, 78, 'oldsize is 78');
+            t.ok(Array.isArray(change.hunks), 'hunks is an Array');
+            t.ok(change.hunks.length == 2, 'has 2 hunks');
+            t.equal(change.hunks[0], hunk1, 'test hunk 1');
+            t.equal(change.hunks[1], hunk2, 'test hunk 2');
         });
         t.end();
     })
     .catch(function(err){
+        t.error(err);
+        t.end();
+    });
+});
+
+
+tape('diff commit', function(t){
+    git.open(dir)
+    .then(function(repo){
+        return git.commit(repo)
+        .then(function(){
+            return files.appendFile(file1, 'e\nf\n');
+        })
+        .then(function(){
+            return git.commit(repo, {message: 'appends to file1'});
+        })
+        .then(function(){
+            return files.appendFile(file1, 'g\nh\n');
+        })
+        .then(function(){
+            return git.commit(repo, {message: 'appends to file1'});
+        })
+        .then(function(){
+            return git.log(repo);
+        })
+        .then(function(history){
+            return history.map(function(log){
+                return log.commit;
+            });
+        })
+        .then(function(commits){
+            return git.diff(repo, commits[1])
+            .then(function(changes){
+                var hunk = '@@ -2,3 +2,5 @@ a\n b\n c\n d\n+e\n+f';
+                t.ok(Array.isArray(changes), 'changes is an Array');
+                t.equal(changes.length, 1, 'has 1 change');
+                t.equal(changes[0].status, 'modified', 'status is modified');
+                t.equal(changes[0].size, 12, 'size is 12');
+                t.equal(changes[0].oldsize, 8, 'oldsize is 8');
+                t.equal(changes[0].hunks[0], hunk, 'test hunk');
+            })
+            .then(function(){
+                return git.diff(repo, commits[0], commits[3]);
+            })
+        });
+    })
+    .then(function(changes){
+        changes.forEach(function(change){
+
+            t.ok(change.path, change.path);
+            t.ok(change.status, 'has status');
+            if (change.path == 'file1.txt'){
+                t.equal(change.status, 'modified', 'status is modified');
+                t.equal(change.size, 16, 'size is 16');
+                t.equal(change.oldsize, 8, 'oldsize is 8');
+                t.equal(change.hunks[0], '@@ -2,3 +2,7 @@ a\n b\n c\n d\n+e\n+f\n+g\n+h', 'test hunk');
+
+            }
+            if (change.path == 'file2.txt'){
+                t.equal(change.status, 'modified', 'status is modified');
+                t.equal(change.size, 78, 'size is 78');
+                t.equal(change.oldsize, 78, 'oldsize is 78');
+                t.equal(change.hunks[0], '@@ -1,7 +1,6 @@\n 1\n 2\n-3\n-4\n+3.1\n 5\n 6\n 7', 'test hunk');
+                t.equal(change.hunks[1], '@@ -22,7 +21,7 @@\n 22\n 23\n 24\n-25\n+52\n 26\n 27\n 28', 'test hunk');
+            }
+            if (change.path == 'file3.txt'){
+                t.equal(change.status, 'added', 'status is added');
+                t.equal(change.size, 8, 'size is 8');
+                t.false(change.oldsize, 'has no oldsize');
+                t.equal(change.hunks[0], '@@ -0,0 +1,2 @@\n+foo\n+bar', 'test hunk');
+            }
+
+        });
+    })
+    .then(function(){
+        t.end();
+    })
+    .catch(function(err){
+        console.log(err.stack);
         t.error(err);
         t.end();
     });

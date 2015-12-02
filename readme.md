@@ -136,7 +136,23 @@ git.open('../repo-path/new/or/existing')
 ```
 
 
-### diff (repo)
+### log (repo)
+
+Returns an Array of all commits.
+
+```javascript
+git.open('../repo-path/new/or/existing')
+.then(function(repo){
+    // git log
+    return git.log(repo)
+    .then(function(log){
+        console.log(log);
+    });
+});
+```
+
+
+### diff (repo[, commit[, commit]])
 
 Returns an Array of modified files and their diffs.
 
@@ -152,20 +168,43 @@ git.open('../repo-path/new/or/existing')
 ```
 
 
-### log (repo)
-
-Returns an Array of all commits.
+#### Get a diff of a commit
 
 ```javascript
 git.open('../repo-path/new/or/existing')
 .then(function(repo){
-    // git log
     return git.log(repo)
-    .then(function(log){
-        console.log(log);
+    .then(function(history){
+        return history[0].commit;
+    })
+    .then(function(commit){
+        // git diff <commit>
+        return git.diff(repo, commit);
+    })
+    .then(function(diff){
+        console.log(diff);
     });
 });
 ```
+
+#### Get a diff between 2 commits
+
+```javascript
+git.open('../repo-path/new/or/existing')
+.then(function(repo){
+    return git.log(repo)
+    .then(function(history){
+        var commit1 = history[0].commit;
+        var commit2 = history[2].commit;
+        // git diff <from> <to>
+        return git.diff(repo, commit1, commit2);
+    })
+    .then(function(diff){
+        console.log(diff);
+    });
+});
+```
+
 
 ### config
 
