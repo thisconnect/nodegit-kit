@@ -55,8 +55,8 @@ git.open('../repo-path/new/or/existing')
 - [init](#init-path-options)
 - [commit](#commit-repo-options)
 - [status](#status-repo)
-- [diff](#diff-repo)
 - [log](#log-repo)
+- [diff](#diff-repo)
 - [config](#config)
 
 
