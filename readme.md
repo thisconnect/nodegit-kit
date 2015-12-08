@@ -52,48 +52,34 @@ git.open('../repo-path/new/or/existing')
 ## API
 
 - [open](#open-path-options)
-- [init](#init-path-options)
 - [commit](#commit-repo-options)
 - [status](#status-repo)
 - [log](#log-repo)
 - [diff](#diff-repo)
 - [config](#config)
+- [init](#init-path-options)
+- [init.commit](#init.commit-repo-options)
 
 
 ### open (path[, options])
 
-Returns repository, if no repo is found, creates dir and initializes repository.
+Returns repository, if no repo is found, tries to create the directory
+and initializes the repository.
+Initializing is using [init](#init-path-options) internally.
 
 - `path` String
 - `options` Object
-  - `init` Boolean defaults to true
+  - `init` Boolean whether to create a first commit, defaults to true
 
 ```javascript
 git.open('../repo-path/new/or/existing', {
-    init: false
+    'init': false
 })
 .then(function(repo){
-});
-```
-
-
-### init (path[, options])
-
-Ensures directory exists, initializes, creates a first commit and returns repo.
-
-- `path` String
-- `options` Object
-  - `bare` Number defaults to 0
-  - `commit` Boolean defaults to true
-  - `message` String defaults to 'initial commit'
-
-```javascript
-git.init('../repo-path/new/or/existing', {
-    base: 0,
-    commit: true,
-    message: 'my first commit'
+    // NodeGit repository instance
 })
-.then(function(repo){
+.catch(function(){
+    // no repo here
 });
 ```
 
@@ -102,7 +88,7 @@ git.init('../repo-path/new/or/existing', {
 
 Checks if status has pending changes, commits, returns Oid else returns null.
 
-- `repo` NodeGit Repository instance
+- `repo` NodeGit repository instance
 - `options`
   - `message` String defaults to 'update'
 
@@ -111,7 +97,7 @@ git.open('../repo-path/new/or/existing')
 .then(function(repo){
     // git commit -am"a new commit"
     return git.commit(repo, {
-        message: 'a new commit'
+        'message': 'a new commit'
     })
     .then(function(oid){
         console.log(oid);
@@ -208,12 +194,13 @@ git.open('../repo-path/new/or/existing')
 
 ### config
 
-Allows to write/read global and local values.
+Allows to write/read global and local git config values.
 Local values are stored in the Git directory `./git/config` and overrule global configurations.
-Git locks the config when changing configurations,
-therefore modifications can not be done in parallel,
+Note: Git locks the config when changing configurations,
+therefore writing multiple configs can not be done in parallel.
 e.g. Promise.all multiple individual `git.config.set` calls
-will throw a failed to lock file for writing error.
+will throw a "Failed to lock file for writing" error,
+[nodegit/issues/757](https://github.com/nodegit/nodegit/issues/757).
 
 
 See also [8.1 Customizing Git - Git Configuration](http://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) (Git SCM Documentation)
@@ -266,6 +253,63 @@ git.config.get(['user.name', 'user.email'])
 git.config.set({
     'user.name': 'John Doe',
     'user.email': 'johndoe@example.com'
+});
+```
+
+
+### init (path[, options])
+
+Ensures directory exists, initializes, creates a first commit and returns repo.
+This is optional and only useful to control the first commit.
+
+- `path` String
+- `options` Object
+  - `bare` Number defaults to 0
+  - `commit` Boolean defaults to true
+  - `message` String defaults to 'initial commit'
+
+```javascript
+git.init('../repo-path/new/or/existing', {
+    'bare': 0,
+    'commit': true,
+    'message': 'my first commit'
+})
+.then(function(repo){
+    // NodeGit repository instance
+});
+```
+
+
+### init.commit (repo[, options])
+
+Can be used to in combination with suppressing commit on init.
+
+
+- `repo` NodeGit Repository instance
+- `options`
+  - `message` String defaults to 'initial commit'
+
+
+```javascript
+git.open('../path/to/repo', {
+    'init': false
+})
+.catch(function(){
+    return git.init('../path/to/repo', {
+        'commit': false
+    })
+    .then(function(repo){
+        // do something before first commit
+        return repo;
+    })
+    .then(function(repo){
+        git.init.commit(repo, {
+            'message': 'initialize repository'
+        });
+    });
+})
+.then(function(repo){
+    // NodeGit repository instance
 });
 ```
 
