@@ -101,19 +101,13 @@ tape('commit nothing', function(t){
 tape('log --abbrev-commit', function(t){
     git.open(dir)
     .then(function(repo){
-        return git.config.set(repo, {
-            'core.abbrev': 9
+        return git.log(repo, {
+            'abbrev-commit': true
         })
-        .then(function(){
-            return git.log(repo, {
-                'abbrev-commit': true
-            });
-        })
-        .then(function(history){
-            t.ok(history.length > 3, 'has commits');
-            history.forEach(function(entry){
-                t.equal(entry.commit.length, 9, 'length of sha is 9');
-            });
+        .catch(function(error){
+            t.ok(error instanceof Error, 'has Error');
+            var msg = 'Config value \'core.abbrev\' was not found';
+            t.equal(error.message, msg, msg)
         })
         .then(function(){
             return git.log(repo, {
@@ -123,9 +117,25 @@ tape('log --abbrev-commit', function(t){
         })
         .then(function(history){
             t.ok(history.length > 3, 'has commits');
-            history.forEach(function(entry){
-                t.equal(entry.commit.length, 6, 'length of sha is 6');
+            t.ok(history.every(function(entry){
+                return entry.commit.length == 6;
+            }), 'every id has length of 6');
+        })
+        .then(function(){
+            return git.config.set(repo, {
+                'core.abbrev': 9
             });
+        })
+        .then(function(){
+            return git.log(repo, {
+                'abbrev-commit': true
+            });
+        })
+        .then(function(history){
+            t.ok(history.length > 3, 'has commits');
+            t.ok(history.every(function(entry){
+                return entry.commit.length == 9;
+            }), 'every id has length of 9');
         });
     })
     .then(function(){
