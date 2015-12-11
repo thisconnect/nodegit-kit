@@ -179,7 +179,6 @@ tape('diff commit', function(t){
         t.end();
     })
     .catch(function(err){
-        console.log(err.stack);
         t.error(err);
         t.end();
     });

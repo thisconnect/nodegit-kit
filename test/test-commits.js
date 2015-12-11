@@ -77,46 +77,6 @@ tape('log commits', function(t){
     });
 });
 
-/*
-tape('log diff', function(t){
-    git.open(dir)
-    .then(function(repo){
-        return git.log(repo)
-        .then(function(history){
-            return history.map(function(log){
-                return log.commit;
-            });
-        })
-        .then(function(commits){
-            console.log(commits);
-
-            return git.diff(repo)
-        })
-        .then(function(changes){
-            t.ok(Array.isArray(changes), 'changes is an Array');
-            changes.forEach(function(change){
-                t.ok(change.path, 'has path');
-                t.ok(change.size, 'has size');
-                t.ok(change.status, 'has status');
-                if (change.status == 'modified'){
-                    t.ok(change.oldsize, 'has old size');
-                    t.ok(Array.isArray(change.hunks), 'hunks is an Array');
-                    t.ok(change.hunks.length > 0, 'has at least 1 diff');
-                }
-            });
-            return repo;
-        });
-    })
-    .then(function(){
-        t.end();
-    })
-    .catch(function(err){
-        t.error(err);
-        t.end();
-    });
-});
-*/
-
 
 tape('commit nothing', function(t){
     git.open(dir)
@@ -136,3 +96,59 @@ tape('commit nothing', function(t){
         t.end();
     });
 });
+
+
+tape('log --abbrev-commit', function(t){
+    git.open(dir)
+    .then(function(repo){
+        return git.config.set(repo, {
+            'core.abbrev': 9
+        })
+        .then(function(){
+            return git.log(repo, {
+                'abbrev-commit': true
+            });
+        })
+        .then(function(history){
+            t.ok(history.length > 3, 'has commits');
+            history.forEach(function(entry){
+                t.equal(entry.commit.length, 9, 'length of sha is 9');
+            });
+        })
+        .then(function(){
+            return git.log(repo, {
+                'abbrev': 6,
+                'abbrev-commit': true
+            });
+        })
+        .then(function(history){
+            t.ok(history.length > 3, 'has commits');
+            history.forEach(function(entry){
+                t.equal(entry.commit.length, 6, 'length of sha is 6');
+            });
+        });
+    })
+    .then(function(){
+        t.end();
+    })
+    .catch(function(err){
+        t.error(err);
+        t.end();
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**/
