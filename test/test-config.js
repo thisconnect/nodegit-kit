@@ -139,6 +139,28 @@ tape('config core.autocrlf', function(t){
 });
 
 
+tape('config set a number (core.abbrev)', function(t){
+    git.open(dir1)
+    .then(function(repo){
+        return git.config.set(repo, {
+            'core.abbrev': 11
+        })
+        .then(function(){
+            return git.config.get(repo, 'core.abbrev');
+        });
+    })
+    .then(function(abbrev){
+        t.ok(abbrev, 'got core.abbrev');
+        t.equal(Number(abbrev), 11, 'core.abbrev is 11');
+        t.end();
+    })
+    .catch(function(error){
+        t.error(error, error.message);
+        t.end();
+    });
+});
+
+
 tape('get local config', function(t){
     git.open(dir1)
     .then(function(repo){
