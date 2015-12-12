@@ -143,8 +143,20 @@ tape('diff commit', function(t){
                 t.equal(changes[0].hunks[0], hunk, 'test hunk');
             })
             .then(function(){
-                return git.diff(repo, commits[0], commits[3]);
+                var from = commits[0].slice(0, 10);
+                var to = commits[2].slice(0, 10);
+                return git.diff(repo, from, to);
             })
+            .then(function(changes){
+                var hunk = '@@ -2,3 +2,7 @@ a\n b\n c\n d\n+e\n+f\n+g\n+h';
+                t.equal(changes.length, 1, 'has 1 diff (2 commits same file)');
+                t.equal(changes[0].size, 16, 'size is 16');
+                t.equal(changes[0].oldsize, 8, 'oldsize is 8');
+                t.equal(changes[0].hunks[0], hunk, 'test hunk');
+            })
+            .then(function(){
+                return git.diff(repo, commits[0], commits[3]);
+            });
         });
     })
     .then(function(changes){
@@ -179,6 +191,7 @@ tape('diff commit', function(t){
         t.end();
     })
     .catch(function(err){
+        console.log(err.stack);
         t.error(err);
         t.end();
     });
