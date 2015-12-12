@@ -5,6 +5,7 @@ NodeGit-Kit
 [![Dependencies](https://img.shields.io/david/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit)
 [![Dev Dependencies](https://img.shields.io/david/dev/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit#info=devDependencies)
 
+
 Promises for git commands such as `git init`,
 `git status`, `git add *`, `git diff`, `git log` and `git commit -am"commit message"`.
 
@@ -110,6 +111,8 @@ git.open('../repo-path/new/or/existing')
 
 Returns an Array of changed files and their status.
 
+- `repo` NodeGit repository instance
+
 ```javascript
 git.open('../repo-path/new/or/existing')
 .then(function(repo){
@@ -148,6 +151,8 @@ git.open('../repo-path/new/or/existing')
 
 Returns an Array of modified files and their diffs.
 
+- `repo` NodeGit repository instance
+
 ```javascript
 git.open('../repo-path/new/or/existing')
 .then(function(repo){
@@ -178,6 +183,7 @@ git.open('../repo-path/new/or/existing')
     });
 });
 ```
+
 
 #### Get a diff between 2 commits
 
