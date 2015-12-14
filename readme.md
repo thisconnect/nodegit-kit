@@ -56,7 +56,7 @@ git.open('../repo-path/new/or/existing')
 - [open](#open-path-options)
 - [commit](#commit-repo-options)
 - [status](#status-repo)
-- [log](#log-repo)
+- [log](#log-repo-options)
 - [diff](#diff-repo)
 - [config](#config)
 - [init](#init-path-options)
@@ -126,7 +126,7 @@ git.open('../repo-path/new/or/existing')
 ```
 
 
-### log (repo)
+### log (repo[, options])
 
 Returns an Array of all commits.
 
@@ -219,7 +219,9 @@ will throw a "Failed to lock file for writing" error,
 See also [8.1 Customizing Git - Git Configuration](http://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration) (Git SCM Documentation)
 
 
-#### Example set name and email for a specific repository
+#### config.set (repo, options)
+
+##### Example set name and email for a specific repository
 
 Setting user name and email similar to
 `git config user.name "John Doe"` and  `git config user.email johndoe@example.com`.
@@ -235,7 +237,9 @@ git.open('my/repository')
 ```
 
 
-#### Example reading user.name and user.email
+#### config.get (repo, options)
+
+##### Example reading user.name and user.email
 
 Similar to `git config user.name` returns config for a repository if there any or else the global Git configuration.
 
@@ -249,8 +253,9 @@ git.open('my/repository')
 });
 ```
 
+#### config.get (options)
 
-#### Example working with global Git configuration
+##### Example working with global Git configuration
 
 When no repo is given setting and getting config will operate in `--global` mode and read and write to `~/.gitconfig` (or `~/.config/git/config`).
 
@@ -260,6 +265,8 @@ git.config.get(['user.name', 'user.email'])
     // [ 'John Doe', 'johndoe@example.com' ]
 });
 ```
+
+##### config.set (options)
 
 ```javascript
 // warning this will change your global git config
@@ -327,7 +334,7 @@ git.open('../path/to/repo', {
 ```
 
 
-### Test
+## Test
 
 ```bash
 npm install
