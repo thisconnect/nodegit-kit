@@ -4,7 +4,7 @@ NodeGit-Kit
 [![Build Status](https://img.shields.io/travis/thisconnect/nodegit-kit/master.svg?style=flat-square)](https://travis-ci.org/thisconnect/nodegit-kit)
 [![Dependencies](https://img.shields.io/david/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit)
 [![Dev Dependencies](https://img.shields.io/david/dev/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit#info=devDependencies)
-[![MIT](https://img.shields.io/github/license/thisconnect/nodegit-kit.svg?style=flat-square)](https://github.com/thisconnect/nodegit-kit/blob/master/license)
+[![MIT](https://img.shields.io/npm/l/nodegit-kit.svg?style=flat-square)](https://github.com/thisconnect/nodegit-kit/blob/master/license)
 [![NPM Version](https://img.shields.io/npm/v/nodegit-kit.svg?style=flat-square)](https://www.npmjs.com/package/nodegit-kit)
 
 Promises for git commands such as `git init`,
