@@ -107,7 +107,7 @@ tape('diff', function(t){
 });
 
 
-tape('diff commit', function(t){
+tape('commit changes', function(t){
     git.open(dir)
     .then(function(repo){
         return git.commit(repo)
@@ -122,10 +122,22 @@ tape('diff commit', function(t){
         })
         .then(function(){
             return git.commit(repo, {message: 'appends to file1'});
-        })
-        .then(function(){
-            return git.log(repo);
-        })
+        });
+    })
+    .then(function(){
+        t.end();
+    })
+    .catch(function(err){
+        t.error(err);
+        t.end();
+    });
+});
+
+
+tape('diff commit', function(t){
+    git.open(dir)
+    .then(function(repo){
+        return git.log(repo)
         .then(function(history){
             return history.map(function(log){
                 return log.commit;
@@ -134,12 +146,12 @@ tape('diff commit', function(t){
         .then(function(commits){
             return git.diff(repo, commits[1])
             .then(function(changes){
-                var hunk = '@@ -2,3 +2,5 @@ a\n b\n c\n d\n+e\n+f';
+                var hunk = '@@ -4,3 +4,5 @@ c\n d\n e\n f\n+g\n+h';
                 t.ok(Array.isArray(changes), 'changes is an Array');
                 t.equal(changes.length, 1, 'has 1 change');
                 t.equal(changes[0].status, 'modified', 'status is modified');
-                t.equal(changes[0].size, 12, 'size is 12');
-                t.equal(changes[0].oldsize, 8, 'oldsize is 8');
+                t.equal(changes[0].size, 16, 'size is 16');
+                t.equal(changes[0].oldsize, 12, 'oldsize is 12');
                 t.equal(changes[0].hunks[0], hunk, 'test hunk');
             })
             .then(function(){
@@ -189,6 +201,48 @@ tape('diff commit', function(t){
     })
     .then(function(){
         t.end();
+    })
+    .catch(function(err){
+        console.log(err.stack);
+        t.error(err);
+        t.end();
+    });
+});
+
+
+tape('append but do not commit', function(t){
+    files.appendFile(file1, 'i\nj\n')
+    .then(function(){
+        t.end();
+    })
+    .catch(function(err){
+        t.error(err);
+        t.end();
+    });
+});
+
+
+tape('diff HEAD~2', function(t){
+    git.open(dir)
+    .then(function(repo){
+        return git.log(repo)
+        .then(function(log){
+            return git.diff(repo, log[2].commit);
+        })
+        .then(function(diff){
+            return diff[0];
+        })
+        .then(function(change){
+            return git.diff(repo, 'HEAD~2')
+            .then(function(diffs){
+                var diff = diffs[0];
+                t.equal(diff.path, change.path, 'file1.txt');
+                t.equal(diff.size, change.size, 'size is 20');
+                t.equal(diff.oldsize, change.oldsize, 'oldsize is 8');
+                t.equal(diff.hunks[0], change.hunks[0], change.hunks[0]);
+                t.end();
+            });
+        });
     })
     .catch(function(err){
         console.log(err.stack);
