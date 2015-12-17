@@ -107,7 +107,7 @@ tape('log --abbrev-commit', function(t){
         .catch(function(error){
             t.ok(error instanceof Error, 'has Error');
             var msg = 'Config value \'core.abbrev\' was not found';
-            t.equal(error.message, msg, msg)
+            t.equal(error.message, msg, msg);
         })
         .then(function(){
             return git.log(repo, {
