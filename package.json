@@ -25,14 +25,14 @@
   },
   "dependencies": {
     "debug": "^2.2.0",
-    "fildes": "^1.0.3",
-    "nodegit": "^0.6.2"
+    "fildes": "^1.0.4",
+    "nodegit": "^0.6.3"
   },
   "license": "MIT",
   "devDependencies": {
-    "fildes-extra": "^0.3.0",
+    "fildes-extra": "^0.5.0",
     "istanbul": "^0.4.1",
     "tap-spec": "^4.1.1",
-    "tape": "^4.2.2"
+    "tape": "^4.4.0"
   }
 }
