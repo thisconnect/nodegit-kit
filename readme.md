@@ -221,9 +221,9 @@ See also [8.1 Customizing Git - Git Configuration](http://git-scm.com/book/en/v2
 
 #### config.set (repo, options)
 
-##### Example set name and email for a specific repository
+##### Example setting user.name and user.email for a specific repository
 
-Setting user name and email similar to
+Set user name and email similar to `cd repo` then
 `git config user.name "John Doe"` and  `git config user.email johndoe@example.com`.
 
 ```javascript
@@ -241,7 +241,7 @@ git.open('my/repository')
 
 ##### Example reading user.name and user.email
 
-Similar to `git config user.name` returns config for a repository if there any or else the global Git configuration.
+Similar to `cd repo` then`git config user.name` returns config for a repository if there any or else the global Git configuration.
 
 ```javascript
 git.open('my/repository')
@@ -253,11 +253,11 @@ git.open('my/repository')
 });
 ```
 
+### global git configuration
+
 #### config.get (options)
 
-##### Example working with global Git configuration
-
-When no repo is given setting and getting config will operate in `--global` mode and read and write to `~/.gitconfig` (or `~/.config/git/config`).
+When no repo is given, setting and getting config will operate in `--global` mode and read and write to `~/.gitconfig` (or `~/.config/git/config`).
 
 ```javascript
 git.config.get(['user.name', 'user.email'])
@@ -266,10 +266,10 @@ git.config.get(['user.name', 'user.email'])
 });
 ```
 
-##### config.set (options)
+#### config.set (options)
 
 ```javascript
-// warning this will change your global git config
+// WARNING: this will change your global git config
 git.config.set({
     'user.name': 'John Doe',
     'user.email': 'johndoe@example.com'
