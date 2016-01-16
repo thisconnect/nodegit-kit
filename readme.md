@@ -2,6 +2,7 @@ NodeGit-Kit
 -----------
 
 [![Build Status](https://img.shields.io/travis/thisconnect/nodegit-kit/master.svg?style=flat-square)](https://travis-ci.org/thisconnect/nodegit-kit)
+[![Coverage Status](https://img.shields.io/coveralls/thisconnect/nodegit-kit/master.svg?style=flat-square)](https://coveralls.io/github/thisconnect/nodegit-kit?branch=master)
 [![Dependencies](https://img.shields.io/david/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit)
 [![Dev Dependencies](https://img.shields.io/david/dev/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit#info=devDependencies)
 [![MIT](https://img.shields.io/npm/l/nodegit-kit.svg?style=flat-square)](https://github.com/thisconnect/nodegit-kit/blob/master/license)
