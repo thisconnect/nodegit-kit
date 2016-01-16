@@ -1,28 +1,24 @@
 var git = require('../');
 
-var tape = require('tape');
+var test = require('ava');
 var files = require('fildes-extra');
 var resolve = require('path').resolve;
 
 var dir = resolve(__dirname, 'repos/commits');
 
 
-tape('commit setup', function(t){
-    files.rmdir(dir)
-    .then(function(){
-        t.end();
-    })
+test.serial('commit setup', function(t){
+    return files.rmdir(dir)
     .catch(function(err){
-        t.error(err);
-        t.end();
+        t.fail(err);
     });
 });
 
 
-tape('commit three times', function(t){
+test.serial('commit three times', function(t){
     var filepath = resolve(dir, 'test.txt');
 
-    git.open(dir)
+    return git.open(dir)
     .then(function(repo){
         return files.writeFile(filepath, 'test\n')
         .then(function(){
@@ -49,37 +45,33 @@ tape('commit three times', function(t){
     })
     .then(function(oid){
         t.pass('commited file');
-        t.end();
     })
     .catch(function(error){
-        t.error(error);
-        t.end();
+        t.fail(error);
     });
 });
 
 
-tape('log commits', function(t){
-    git.open(dir)
+test.serial('commit log', function(t){
+    return git.open(dir)
     .then(function(repo){
         return git.log(repo, {
             sort: 'time'
         })
         .then(function(history){
             t.ok(Array.isArray(history), 'has history');
-            t.equal(history.length, 4, 'has 4 commits');
-            t.equal(history.pop().message, 'initial commit', 'last entry is initial commit');
-            t.end();
+            t.is(history.length, 4, 'has 4 commits');
+            t.is(history.pop().message, 'initial commit', 'last entry is initial commit');
         });
     })
     .catch(function(error){
-        t.error(error);
-        t.end();
+        t.fail(error);
     });
 });
 
 
-tape('commit nothing', function(t){
-    git.open(dir)
+test.serial('commit nothing', function(t){
+    return git.open(dir)
     .then(function(repo){
         return git.commit(repo)
         .then(function(){
@@ -87,8 +79,7 @@ tape('commit nothing', function(t){
         })
         .then(function(history){
             t.ok(Array.isArray(history), 'has history');
-            t.equal(history.length, 4, 'still 4 commits');
-            t.end();
+            t.is(history.length, 4, 'still 4 commits');
         });
     })
     .catch(function(error){
@@ -98,8 +89,8 @@ tape('commit nothing', function(t){
 });
 
 
-tape('log --abbrev-commit', function(t){
-    git.open(dir)
+test.serial('commit test log --abbrev-commit', function(t){
+    return git.open(dir)
     .then(function(repo){
         return git.log(repo, {
             'abbrev-commit': true
@@ -107,7 +98,7 @@ tape('log --abbrev-commit', function(t){
         .catch(function(error){
             t.ok(error instanceof Error, 'has Error');
             var msg = 'Config value \'core.abbrev\' was not found';
-            t.equal(error.message, msg, msg);
+            t.is(error.message, msg, msg);
         })
         .then(function(){
             return git.log(repo, {
@@ -138,27 +129,7 @@ tape('log --abbrev-commit', function(t){
             }), 'every id has length of 9');
         });
     })
-    .then(function(){
-        t.end();
-    })
     .catch(function(err){
-        t.error(err);
-        t.end();
+        t.fail(err);
     });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**/

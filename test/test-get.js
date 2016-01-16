@@ -1,7 +1,7 @@
 var git = require('../');
 var get = require('../lib/get.js');
 
-var tape = require('tape');
+var test = require('ava');
 var files = require('fildes-extra');
 var resolve = require('path').resolve;
 
@@ -9,8 +9,8 @@ var dir = resolve(__dirname, 'repos/get');
 var file = resolve(dir, 'file.txt');
 
 
-tape('get setup', function(t){
-    files.rmdir(dir)
+test.serial('get setup', function(t){
+    return files.rmdir(dir)
     .then(function(){
         return files.write(file, '1\n');
     })
@@ -37,18 +37,14 @@ tape('get setup', function(t){
             });
         });
     })
-    .then(function(){
-        t.end();
-    })
     .catch(function(err){
-        t.error(err);
-        t.end();
+        t.fail(err);
     });
 });
 
-tape('test get', function(t){
+test.serial('get test', function(t){
 
-    git.open(dir)
+    return git.open(dir)
     .then(function(repo){
         return repo.getBranchCommit('master')
         .then(function(commit){
@@ -67,33 +63,29 @@ tape('test get', function(t){
         .then(function(commits){
             return get(repo)
             .then(function(commit){
-                t.equal(commit.sha(), commits[0], 'got last commit');
+                t.is(commit.sha(), commits[0], 'got last commit');
             })
             .then(function(){
                 return get(repo, commits[3])
                 .then(function(commit){
-                    t.equal(commit.sha(), commits[3], 'got first commit');
+                    t.is(commit.sha(), commits[3], 'got first commit');
                 });
             })
             .then(function(){
                 return get(repo, commits[1].slice(0, 7))
                 .then(function(commit){
-                    t.equal(commit.sha(), commits[1], 'got abbrev commit');
+                    t.is(commit.sha(), commits[1], 'got abbrev commit');
                 });
             })
             .then(function(){
                 return get(repo, 'HEAD~2')
                 .then(function(commit){
-                    t.equal(commit.sha(), commits[2], 'got second last commit');
+                    t.is(commit.sha(), commits[2], 'got second last commit');
                 });
             });
         });
     })
-    .then(function(){
-        t.end();
-    })
     .catch(function(err){
-        t.error(err);
-        t.end();
+        t.fail(err);
     });
 });

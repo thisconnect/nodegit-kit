@@ -1,6 +1,6 @@
 var git = require('../');
 
-var tape = require('tape');
+var test = require('ava');
 var files = require('fildes-extra');
 var resolve = require('path').resolve;
 
@@ -9,86 +9,72 @@ var bare = resolve(__dirname, './repos/init-bare.git');
 var manual = resolve(__dirname, './repos/init-manual');
 
 
-tape('init setup', function(t){
-    Promise.all([
+test.serial('init setup', function(t){
+    return Promise.all([
         files.rmdir(dir),
         files.rmdir(bare),
         files.rmdir(manual)
     ])
-    .then(function(){
-        t.end();
-    })
     .catch(function(err){
-        t.error(err);
-        t.end();
+        t.fail(err);
     });
 });
 
 
-tape('init error', function(t){
-    files.writeFile(dir, '')
+test.serial('init error', function(t){
+    return files.writeFile(dir, '')
     .then(function(){
         return git.init(dir);
     })
     .then(function(repo){
         t.fail('should not initialize repository on a file');
-        t.end();
     })
     .catch(function(error){
         t.ok(error, error);
         return files.rmdir(dir);
-    })
-    .then(function(){
-        t.end();
     });
 });
 
 
-tape('init', function(t){
-    git.init(dir, {
+test.serial('init', function(t){
+    return git.init(dir, {
         'message': 'the very first commit'
     })
     .then(function(repo){
         t.ok(repo, 'initialized repository');
-        t.end();
     })
     .catch(function(error){
-        t.error(error);
-        t.end();
+        t.fail(error);
     });
 });
 
 
-tape('reinit', function(t){
-    git.init(dir)
+test.serial('init reinitialize', function(t){
+    return git.init(dir)
     .then(function(repo){
         t.ok(repo, 'reinitialized existing repository');
-        t.end();
     })
     .catch(function(error){
-        t.error(error);
-        t.end();
+        t.fail(error);
     });
 });
 
 
-tape('init bare', function(t){
-    git.init(bare, {
+test.serial('init bare', function(t){
+    return git.init(bare, {
         'bare': 1
     })
     .then(function(repo){
         t.ok(repo, 'initialized bare repository');
-        t.end();
     })
     .catch(function(error){
-        t.error(error);
-        t.end();
+        t.fail(error);
     });
 });
 
 
-tape('init without commit', function(t){
-    git.init(manual, {
+test.serial('init without commit', function(t){
+    return git.init(manual, {
         'commit': false
     })
     .then(function(repo){
@@ -97,7 +83,6 @@ tape('init without commit', function(t){
         return repo.getMasterCommit()
         .then(function(master){
             t.fail('should have no master commit yet');
-            t.end();
         })
         .catch(function(error){
             t.ok(error, error);
@@ -109,13 +94,11 @@ tape('init without commit', function(t){
             return repo.getMasterCommit()
             .then(function(commit){
                 t.ok(commit, 'has master commit');
-                t.deepEqual(oid, commit.id(), 'same Oid');
-                t.end();
+                t.same(oid, commit.id(), 'same Oid');
             });
         });
     })
     .catch(function(error){
-        t.error(error);
-        t.end();
+        t.fail(error);
     });
 });
