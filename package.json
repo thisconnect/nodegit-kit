@@ -1,6 +1,6 @@
 {
   "name": "nodegit-kit",
-  "description": "Promises for git commands like init, add, commit, status, diff",
+  "description": "Complementary NodeGit helpers returning native Promises, helps with git commands such as init, add, commit, status, diff",
   "version": "0.6.0",
   "main": "lib/main.js",
   "repository": {
