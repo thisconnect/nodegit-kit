@@ -5,6 +5,7 @@ addons:
     packages:
       - gcc-4.9
       - g++-4.9
+after_success: npm run coveralls
 before_install:
   - export CC="gcc-4.9"
   - export CXX="g++-4.9"
