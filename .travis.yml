@@ -1,5 +1,17 @@
-after_success: npm run coveralls
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
+      - lcov
+after_success:
+  - npm run coveralls
 before_install:
+  - export CC="gcc-4.9"
+  - export CXX="g++-4.9"
+  - BUILD_ONLY=true npm install
   - git config --global user.name travis
   - git config --global user.email travis@locahost
 cache:
