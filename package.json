@@ -20,8 +20,8 @@
     "git"
   ],
   "scripts": {
-    "test": "ava --verbose ./test/test.js",
-    "test-parallel": "ava --verbose ./test/test-*.js",
+    "test-old": "ava --verbose ./test/test.js",
+    "test": "ava --verbose ./test/test-*.js",
     "coverage": "nyc npm test",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
