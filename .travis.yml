@@ -11,6 +11,8 @@ after_success:
 before_install:
   - export CC="gcc-4.9"
   - export CXX="g++-4.9"
+  - git config --global user.name travis
+  - git config --global user.email travis@locahost
 cache:
   directories:
     - node_modules
