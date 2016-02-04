@@ -22,6 +22,7 @@ test.serial('config setup', function(t){
         ]);
     })
     .catch(function(err){
+        console.log(err);
         t.fail(err);
     });
 });
@@ -59,8 +60,9 @@ test.serial('config test init with local user', function(t){
             });
         });
     })
-    .catch(function(error){
-        t.fail(error);
+    .catch(function(err){
+        console.log(err);
+        t.fail(err);
     });
 });
 
@@ -98,8 +100,9 @@ test.serial('config test overwrite user', function(t){
             });
         });
     })
-    .catch(function(error){
-        t.fail(error);
+    .catch(function(err){
+        console.log(err);
+        t.fail(err);
     });
 });
 
@@ -121,8 +124,9 @@ test.serial('config core.autocrlf', function(t){
         t.ok(autocrlf, 'got core.autocrlf');
         t.is(autocrlf, 'input', 'core.autocrlf is input');
     })
-    .catch(function(error){
-        t.fail(error, error.message);
+    .catch(function(err){
+        console.log(err);
+        t.fail(err, err.message);
     });
 });
 
@@ -142,6 +146,7 @@ test.serial('config set a number (core.abbrev)', function(t){
         t.is(Number(abbrev), 11, 'core.abbrev is 11');
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error, error.message);
     });
 });
@@ -159,6 +164,7 @@ test.serial('config get local user', function(t){
         t.ok(config[1] == 'test@localhost', 'user.email is test@localhost');
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });
@@ -184,6 +190,7 @@ test.serial('config init without local user', function(t){
         history.start();
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });
@@ -201,6 +208,7 @@ test.serial('config get user from repo without local user', function(t){
         t.ok(config[1] != 'test@localhost', 'user.email is not test@localhost');
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });
@@ -218,6 +226,7 @@ test.serial('config get global user', function(t){
         t.ok(config[1] != 'test@localhost', 'user.email is not test@localhost');
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });
@@ -232,6 +241,7 @@ test.serial('config get multiple global user configs', function(t){
         t.ok(config[1] != 'test@localhost', 'user.email is not test@localhost');
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });

@@ -39,8 +39,9 @@ test.serial('state setup', function(t){
             files.writeFile(file3, data3)
         ]);
     })
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });
 
@@ -62,8 +63,9 @@ test.serial('state get status', function(t){
             return file.status == 'new' && file.path == 'file3.txt';
         }), 'file3.txt is new');
     })
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });
 
@@ -93,8 +95,9 @@ test.serial('state get diff', function(t){
             t.is(change.hunks[1], hunk2, 'test hunk 2');
         });
     })
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });
 
@@ -116,8 +119,9 @@ test.serial('state commit changes', function(t){
             return git.commit(repo, { message: 'appends to file1' });
         });
     })
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });
 
@@ -187,16 +191,18 @@ test.serial('state diff commit', function(t){
 
         });
     })
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });
 
 
 test.serial('state append but do not commit', function(t){
     return files.appendFile(file1, 'i\nj\n')
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });
 
@@ -222,8 +228,9 @@ test.serial('state get diff HEAD~2', function(t){
             });
         });
     })
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });
 
@@ -268,7 +275,8 @@ test.serial('state get diff commit', function(t){
 
         });
     })
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });

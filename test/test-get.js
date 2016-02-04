@@ -38,6 +38,7 @@ test.serial('get setup', function(t){
         });
     })
     .catch(function(err){
+        console.log(err);
         t.fail(err);
     });
 });
@@ -86,6 +87,7 @@ test.serial('get test', function(t){
         });
     })
     .catch(function(err){
+        console.log(err);
         t.fail(err);
     });
 });
