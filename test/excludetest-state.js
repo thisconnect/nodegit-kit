@@ -174,6 +174,7 @@ test.serial('state diff commit', function(t){
             }
 
         });
+        return changes;
     });
 });
 
