@@ -21,7 +21,8 @@
   ],
   "scripts": {
     "test-old": "ava --verbose ./test/test.js",
-    "test": "ava --verbose ./test/test-*.js",
+    "test-org": "ava --verbose ./test/test-*.js",
+    "test": "ava --verbose ./test/excludetest-state.js",
     "coverage": "nyc npm test",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
