@@ -124,6 +124,8 @@ test.serial('state diff commit', function(t){
         })
         .then(function(commits){
             console.log(4);
+            console.log(commits[1]);
+            console.log(typeof commits[1]);
             return git.diff(repo, commits[1])
             .then(function(changes){
                 console.log(5);
