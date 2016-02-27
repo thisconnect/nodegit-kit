@@ -27,13 +27,13 @@
   "dependencies": {
     "debug": "^2.2.0",
     "fildes": "^1.0.5",
-    "nodegit": "^0.11.2"
+    "nodegit": "^0.11.5"
   },
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.12.0",
-    "coveralls": "^2.11.6",
+    "coveralls": "^2.11.8",
     "fildes-extra": "^0.5.0",
-    "nyc": "^5.6.0"
+    "nyc": "^6.0.0"
   }
 }
