@@ -23,7 +23,7 @@ test.serial('open error', function(t){
         t.fail('should not open uninitialized repo');
     })
     .catch(function(error){
-        t.ok(error, error);
+        t.truthy(error, error);
     });
 });
 
@@ -31,7 +31,7 @@ test.serial('open error', function(t){
 test.serial('open should create a new repo', function(t){
     return git.open(dir)
     .then(function(repo){
-        t.ok(repo, 'has repo');
+        t.truthy(repo, 'has repo');
     })
     .catch(function(error){
         t.fail(error);

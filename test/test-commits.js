@@ -27,8 +27,8 @@ test.serial('commit three times', function(t){
             });
         })
         .then(function(oid){
-            t.ok(oid, 'has oid');
-            t.ok(oid.toString().length == 40, 'oid has 40 bytes');
+            t.truthy(oid, 'has oid');
+            t.truthy(oid.toString().length == 40, 'oid has 40 bytes');
             return files.writeFile(filepath, 'test2\n');
         })
         .then(function(){
@@ -59,7 +59,7 @@ test.serial('commit log', function(t){
             sort: 'time'
         })
         .then(function(history){
-            t.ok(Array.isArray(history), 'has history');
+            t.truthy(Array.isArray(history), 'has history');
             t.is(history.length, 4, 'has 4 commits');
             t.is(history.pop().message, 'initial commit', 'last entry is initial commit');
         });
@@ -78,7 +78,7 @@ test.serial('commit nothing', function(t){
             return git.log(repo);
         })
         .then(function(history){
-            t.ok(Array.isArray(history), 'has history');
+            t.truthy(Array.isArray(history), 'has history');
             t.is(history.length, 4, 'still 4 commits');
         });
     })
@@ -96,7 +96,7 @@ test.serial('commit test log --abbrev-commit', function(t){
             'abbrev-commit': true
         })
         .catch(function(error){
-            t.ok(error instanceof Error, 'has Error');
+            t.truthy(error instanceof Error, 'has Error');
             var msg = 'Config value \'core.abbrev\' was not found';
             t.is(error.message, msg, msg);
         })
@@ -107,8 +107,8 @@ test.serial('commit test log --abbrev-commit', function(t){
             });
         })
         .then(function(history){
-            t.ok(history.length > 3, 'has commits');
-            t.ok(history.every(function(entry){
+            t.truthy(history.length > 3, 'has commits');
+            t.truthy(history.every(function(entry){
                 return entry.commit.length == 6;
             }), 'every id has length of 6');
         })
@@ -123,8 +123,8 @@ test.serial('commit test log --abbrev-commit', function(t){
             });
         })
         .then(function(history){
-            t.ok(history.length > 3, 'has commits');
-            t.ok(history.every(function(entry){
+            t.truthy(history.length > 3, 'has commits');
+            t.truthy(history.every(function(entry){
                 return entry.commit.length == 9;
             }), 'every id has length of 9');
         });
