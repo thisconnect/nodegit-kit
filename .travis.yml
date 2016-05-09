@@ -9,9 +9,6 @@ after_success:
 before_install:
   - git config --global user.name travis
   - git config --global user.email travis@locahost
-cache:
-  directories:
-    - node_modules
 install:
   - npm install
 language: node_js
