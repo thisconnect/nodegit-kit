@@ -48,14 +48,14 @@ test.serial('state get status', function(t){
         return git.status(repo);
     })
     .then(function(status){
-        t.ok(status && status.length, 'got status');
+        t.truthy(status && status.length, 'got status');
         t.is(status.length, 2, 'got two items');
 
-        t.ok(status.some(function(file){
+        t.truthy(status.some(function(file){
             return file.status == 'modified' && file.path == 'file2.txt';
         }), 'file2.txt is modified');
 
-        t.ok(status.some(function(file){
+        t.truthy(status.some(function(file){
             return file.status == 'new' && file.path == 'file3.txt';
         }), 'file3.txt is new');
     });
@@ -72,17 +72,17 @@ test.serial('state get diff', function(t){
         return git.diff(repo);
     })
     .then(function(changes){
-        t.ok(Array.isArray(changes), 'changes is an Array');
+        t.truthy(Array.isArray(changes), 'changes is an Array');
         changes.forEach(function(change){
-            t.ok(change.path, 'has path');
-            t.ok(change.size, 'has size');
-            t.ok(change.status, 'has status');
+            t.truthy(change.path, 'has path');
+            t.truthy(change.size, 'has size');
+            t.truthy(change.status, 'has status');
 
             if (change.status != 'modified') return;
             t.is(change.size, 78, 'size is 78');
             t.is(change.oldsize, 78, 'oldsize is 78');
-            t.ok(Array.isArray(change.hunks), 'hunks is an Array');
-            t.ok(change.hunks.length == 2, 'has 2 hunks');
+            t.truthy(Array.isArray(change.hunks), 'hunks is an Array');
+            t.truthy(change.hunks.length == 2, 'has 2 hunks');
             t.is(change.hunks[0], hunk1, 'test hunk 1');
             t.is(change.hunks[1], hunk2, 'test hunk 2');
         });
@@ -130,7 +130,7 @@ test.serial('state diff commit', function(t){
             .then(function(changes){
                 console.log(5);
                 var hunk = '@@ -4,3 +4,5 @@ c\n d\n e\n f\n+g\n+h';
-                t.ok(Array.isArray(changes), 'changes is an Array');
+                t.truthy(Array.isArray(changes), 'changes is an Array');
                 t.is(changes.length, 1, 'has 1 change');
                 t.is(changes[0].status, 'modified', 'status is modified');
                 t.is(changes[0].size, 16, 'size is 16');
@@ -161,8 +161,8 @@ test.serial('state diff commit', function(t){
         console.log(9);
         changes.forEach(function(change){
 
-            t.ok(change.path, change.path);
-            t.ok(change.status, 'has status');
+            t.truthy(change.path, change.path);
+            t.truthy(change.status, 'has status');
             if (change.path == 'file1.txt'){
                 t.is(change.status, 'modified', 'status is modified');
                 t.is(change.size, 16, 'size is 16');
@@ -180,7 +180,7 @@ test.serial('state diff commit', function(t){
             if (change.path == 'file3.txt'){
                 t.is(change.status, 'added', 'status is added');
                 t.is(change.size, 8, 'size is 8');
-                t.notOk(change.oldsize, 'has no oldsize');
+                t.falsy(change.oldsize, 'has no oldsize');
                 t.is(change.hunks[0], '@@ -0,0 +1,2 @@\n+foo\n+bar', 'test hunk');
             }
 
@@ -236,8 +236,8 @@ test.serial('state get diff commit', function(t){
     .then(function(changes){
         changes.forEach(function(change){
 
-            t.ok(change.path, change.path);
-            t.ok(change.status, 'has status');
+            t.truthy(change.path, change.path);
+            t.truthy(change.status, 'has status');
             if (change.path == 'file1.txt'){
                 t.is(change.status, 'modified', 'status is modified');
                 t.is(change.size, 16, 'size is 16');
@@ -255,7 +255,7 @@ test.serial('state get diff commit', function(t){
             if (change.path == 'file3.txt'){
                 t.is(change.status, 'added', 'status is added');
                 t.is(change.size, 8, 'size is 8');
-                t.notOk(change.oldsize, 'has no oldsize');
+                t.falsy(change.oldsize, 'has no oldsize');
                 t.is(change.hunks[0], '@@ -0,0 +1,2 @@\n+foo\n+bar', 'test hunk');
             }
 

@@ -41,7 +41,7 @@ test.serial('config test init with local user', function(t){
             return git.init.commit(repo);
         })
         .then(function(oid){
-            t.ok(oid, 'has oid');
+            t.truthy(oid, 'has oid');
 
             return repo.getMasterCommit()
             .then(function(master){
@@ -50,10 +50,10 @@ test.serial('config test init with local user', function(t){
                     var author = commit.author();
                     t.is(author.name(), 'test', 'author name is test');
                     t.is(author.email(), 'test@localhost', 'author email is test@localhost');
-                    t.same(oid, commit.id(), 'same Oid');
+                    t.deepEqual(oid, commit.id(), 'same Oid');
                 });
                 history.on('end', function(commits){
-                    t.ok(commits, 'has commits');
+                    t.truthy(commits, 'has commits');
                     t.is(commits.length, 1, 'has 1 commit');
                 });
                 history.start();
@@ -89,7 +89,7 @@ test.serial('config test overwrite user', function(t){
             ])
             .catch(function(error){
                 t.pass('expect lock error');
-                t.ok(error, error);
+                t.truthy(error, error);
                 return;
             });
         })
@@ -121,7 +121,7 @@ test.serial('config core.autocrlf', function(t){
         return git.config.get(repo, 'core.autocrlf');
     })
     .then(function(autocrlf){
-        t.ok(autocrlf, 'got core.autocrlf');
+        t.truthy(autocrlf, 'got core.autocrlf');
         t.is(autocrlf, 'input', 'core.autocrlf is input');
     })
     .catch(function(err){
@@ -142,7 +142,7 @@ test.serial('config set a number (core.abbrev)', function(t){
         });
     })
     .then(function(abbrev){
-        t.ok(abbrev, 'got core.abbrev');
+        t.truthy(abbrev, 'got core.abbrev');
         t.is(Number(abbrev), 11, 'core.abbrev is 11');
     })
     .catch(function(error){
@@ -158,10 +158,10 @@ test.serial('config get local user', function(t){
         return git.config.get(repo, ['user.name', 'user.email']);
     })
     .then(function(config){
-        t.ok(config[0], config[0]);
-        t.ok(config[1], config[1]);
-        t.ok(config[0] == 'test', 'user.name is test');
-        t.ok(config[1] == 'test@localhost', 'user.email is test@localhost');
+        t.truthy(config[0], config[0]);
+        t.truthy(config[1], config[1]);
+        t.truthy(config[0] == 'test', 'user.name is test');
+        t.truthy(config[1] == 'test@localhost', 'user.email is test@localhost');
     })
     .catch(function(error){
         console.log(error);
@@ -180,11 +180,11 @@ test.serial('config init without local user', function(t){
         var history = master.history();
         history.on('commit', function(commit){
             var author = commit.author();
-            t.ok(author.name(), author.name());
-            t.ok(author.email(), author.email());
+            t.truthy(author.name(), author.name());
+            t.truthy(author.email(), author.email());
         });
         history.on('end', function(commits){
-            t.ok(commits, 'has commits');
+            t.truthy(commits, 'has commits');
             t.is(commits.length, 1, 'has 1 commit');
         });
         history.start();
@@ -202,10 +202,10 @@ test.serial('config get user from repo without local user', function(t){
         return git.config.get(repo, ['user.name', 'user.email']);
     })
     .then(function(config){
-        t.ok(config[0], config[0]);
-        t.ok(config[1], config[1]);
-        t.ok(config[0] != 'test', 'user.name is not test');
-        t.ok(config[1] != 'test@localhost', 'user.email is not test@localhost');
+        t.truthy(config[0], config[0]);
+        t.truthy(config[1], config[1]);
+        t.truthy(config[0] != 'test', 'user.name is not test');
+        t.truthy(config[1] != 'test@localhost', 'user.email is not test@localhost');
     })
     .catch(function(error){
         console.log(error);
@@ -220,10 +220,10 @@ test.serial('config get global user', function(t){
         git.config.get('user.email')
     ])
     .then(function(config){
-        t.ok(config[0], config[0]);
-        t.ok(config[1], config[1]);
-        t.ok(config[0] != 'test', 'user.name is not test');
-        t.ok(config[1] != 'test@localhost', 'user.email is not test@localhost');
+        t.truthy(config[0], config[0]);
+        t.truthy(config[1], config[1]);
+        t.truthy(config[0] != 'test', 'user.name is not test');
+        t.truthy(config[1] != 'test@localhost', 'user.email is not test@localhost');
     })
     .catch(function(error){
         console.log(error);
@@ -235,10 +235,10 @@ test.serial('config get global user', function(t){
 test.serial('config get multiple global user configs', function(t){
     return git.config.get(['user.name', 'user.email'])
     .then(function(config){
-        t.ok(config[0], config[0]);
-        t.ok(config[1], config[1]);
-        t.ok(config[0] != 'test', 'user.name is not test');
-        t.ok(config[1] != 'test@localhost', 'user.email is not test@localhost');
+        t.truthy(config[0], config[0]);
+        t.truthy(config[1], config[1]);
+        t.truthy(config[0] != 'test', 'user.name is not test');
+        t.truthy(config[1] != 'test@localhost', 'user.email is not test@localhost');
     })
     .catch(function(error){
         console.log(error);

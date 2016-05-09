@@ -31,7 +31,7 @@ test.serial('init error', function(t){
         t.fail('should not initialize repository on a file');
     })
     .catch(function(error){
-        t.ok(error, error);
+        t.truthy(error, error);
         return files.rmdir(dir);
     });
 });
@@ -42,7 +42,7 @@ test.serial('init', function(t){
         'message': 'the very first commit'
     })
     .then(function(repo){
-        t.ok(repo, 'initialized repository');
+        t.truthy(repo, 'initialized repository');
     })
     .catch(function(error){
         console.log(error);
@@ -54,7 +54,7 @@ test.serial('init', function(t){
 test.serial('init reinitialize', function(t){
     return git.init(dir)
     .then(function(repo){
-        t.ok(repo, 'reinitialized existing repository');
+        t.truthy(repo, 'reinitialized existing repository');
     })
     .catch(function(error){
         console.log(error);
@@ -68,7 +68,7 @@ test.serial('init bare', function(t){
         'bare': 1
     })
     .then(function(repo){
-        t.ok(repo, 'initialized bare repository');
+        t.truthy(repo, 'initialized bare repository');
     })
     .catch(function(error){
         console.log(error);
@@ -82,23 +82,23 @@ test.serial('init without commit', function(t){
         'commit': false
     })
     .then(function(repo){
-        t.ok(repo, 'initialized repository without first commit');
+        t.truthy(repo, 'initialized repository without first commit');
         // add files or change configs before first commit
         return repo.getMasterCommit()
         .then(function(master){
             t.fail('should have no master commit yet');
         })
         .catch(function(error){
-            t.ok(error, error);
+            t.truthy(error, error);
             // manually do first commit
             return git.init.commit(repo);
         })
         .then(function(oid){
-            t.ok(oid, 'has oid');
+            t.truthy(oid, 'has oid');
             return repo.getMasterCommit()
             .then(function(commit){
-                t.ok(commit, 'has master commit');
-                t.same(oid, commit.id(), 'same Oid');
+                t.truthy(commit, 'has master commit');
+                t.deepEqual(oid, commit.id(), 'same Oid');
             });
         });
     })
