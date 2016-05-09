@@ -111,24 +111,17 @@ test.serial('state commit changes', function(t){
 
 
 test.serial('state diff commit', function(t){
-    console.log(1);
     return git.open(dir)
     .then(function(repo){
-        console.log(2);
         return git.log(repo)
         .then(function(history){
-            console.log(3);
             return history.map(function(log){
                 return log.commit;
             });
         })
         .then(function(commits){
-            console.log(4);
-            console.log(commits[1]);
-            console.log(typeof commits[1]);
             return git.diff(repo, commits[1])
             .then(function(changes){
-                console.log(5);
                 var hunk = '@@ -4,3 +4,5 @@ c\n d\n e\n f\n+g\n+h';
                 t.truthy(Array.isArray(changes), 'changes is an Array');
                 t.is(changes.length, 1, 'has 1 change');
@@ -138,13 +131,11 @@ test.serial('state diff commit', function(t){
                 t.is(changes[0].hunks[0], hunk, 'test hunk');
             })
             .then(function(){
-                console.log(6);
                 var from = commits[0].slice(0, 10);
                 var to = commits[2].slice(0, 10);
                 return git.diff(repo, from, to);
             })
             .then(function(changes){
-                console.log(7);
                 var hunk = '@@ -2,3 +2,7 @@ a\n b\n c\n d\n+e\n+f\n+g\n+h';
                 t.is(changes.length, 1, 'has 1 diff (2 commits same file)');
                 t.is(changes[0].size, 16, 'size is 16');
@@ -152,13 +143,11 @@ test.serial('state diff commit', function(t){
                 t.is(changes[0].hunks[0], hunk, 'test hunk');
             })
             .then(function(){
-                console.log(8);
                 return git.diff(repo, commits[0], commits[3]);
             });
         });
     })
     .then(function(changes){
-        console.log(9);
         changes.forEach(function(change){
 
             t.truthy(change.path, change.path);
@@ -185,7 +174,6 @@ test.serial('state diff commit', function(t){
             }
 
         });
-        console.log(10);
         return changes;
     });
 });
