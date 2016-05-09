@@ -10,7 +10,7 @@ before_install:
   - git config --global user.name travis
   - git config --global user.email travis@locahost
 install:
-  - BUILD_ONLY=true npm install
+  - npm install
 language: node_js
 node_js:
   - '4.4'
