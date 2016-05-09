@@ -272,3 +272,32 @@ test.serial('state get diff commit', function(t){
         t.fail(err);
     });
 });
+
+
+test.serial('state test sha and sha1 in diff', function(t){
+    return git.open(dir)
+    .then(function(repo){
+        return git.log(repo)
+        .then(function(history){
+            return history.map(function(log){
+                return log.commit;
+            });
+        })
+        .then(function(commits){
+            return git.diff(repo, commits[0], commits[3]);
+        });
+    })
+    .then(function(changes){
+        changes.forEach(function(change){
+            t.truthy(change.path, change.path);
+            t.truthy(change.sha1, 'has sha1');
+            t.truthy(change.sha, 'has sha');
+            if (change.path == 'file3.txt'){
+                t.is(change.sha1, '0000000000000000000000000000000000000000', 'new files has a sha1 of 0000000');
+            }
+        });
+    })
+    .catch(function(err){
+        t.fail(err);
+    });
+});
