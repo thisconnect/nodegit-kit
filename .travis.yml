@@ -4,9 +4,8 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - build-essential
-      - libssl-dev
-      - gcc-4.9-multilib
-      - g++-4.9-multilib
+      - gcc-4.9-dev
+      - g++-4.9-dev
       - lcov
 after_success:
   - npm run coveralls
