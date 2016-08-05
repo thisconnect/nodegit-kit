@@ -189,10 +189,13 @@ git.open('../repo-path/new/or/existing')
 
 #### Get a diff between 2 commits
 
+**Breaking API change in 0.12.0**
+Changed order of `from` and `to` to be aligned with git-cli.
+
 ```javascript
 git.open('../repo-path/new/or/existing')
 .then(function(repo){
-    return git.log(repo)
+    return git.log(repo, { sort: 'reverse' })
     .then(function(history){
         var commit1 = history[0].commit;
         var commit2 = history[2].commit;

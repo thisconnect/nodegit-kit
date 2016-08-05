@@ -125,14 +125,14 @@ test.serial('state commit changes', function(t){
 test.serial('state diff commit', function(t){
     return git.open(dir)
     .then(function(repo){
-        return git.log(repo)
+        return git.log(repo, { sort: 'reverse' })
         .then(function(history){
             return history.map(function(log){
                 return log.commit;
             });
         })
         .then(function(commits){
-            return git.diff(repo, commits[1])
+            return git.diff(repo, commits[2])
             .then(function(changes){
                 var hunk = '@@ -4,3 +4,5 @@ c\n d\n e\n f\n+g\n+h';
                 t.truthy(Array.isArray(changes), 'changes is an Array');
@@ -143,8 +143,8 @@ test.serial('state diff commit', function(t){
                 t.is(changes[0].hunks[0], hunk, 'test hunk');
             })
             .then(function(){
-                var from = commits[0].slice(0, 10);
-                var to = commits[2].slice(0, 10);
+                var from = commits[1].slice(0, 10);
+                var to = commits[3].slice(0, 10);
                 return git.diff(repo, from, to);
             })
             .then(function(changes){
@@ -230,7 +230,7 @@ test.serial('state get diff HEAD~2', function(t){
 test.serial('state get diff commit', function(t){
     return git.open(dir)
     .then(function(repo){
-        return git.log(repo)
+        return git.log(repo, { sort: 'reverse' })
         .then(function(history){
             return history.map(function(log){
                 return log.commit;
@@ -277,7 +277,7 @@ test.serial('state get diff commit', function(t){
 test.serial('state test sha and sha1 in diff', function(t){
     return git.open(dir)
     .then(function(repo){
-        return git.log(repo)
+        return git.log(repo, { sort: 'reverse' })
         .then(function(history){
             return history.map(function(log){
                 return log.commit;
