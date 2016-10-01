@@ -13,7 +13,7 @@ install:
   - npm install
 language: node_js
 node_js:
-  - '4.4'
+  - '4'
   - 'stable'
 os:
   - linux
