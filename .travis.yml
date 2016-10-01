@@ -17,4 +17,5 @@ node_js:
   - 'stable'
 os:
   - linux
+  - osx
 sudo: false
