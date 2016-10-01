@@ -1,12 +1,12 @@
 NodeGit-Kit
 -----------
 
-[![Build Status](https://img.shields.io/travis/thisconnect/nodegit-kit/master.svg?style=flat-square)](https://travis-ci.org/thisconnect/nodegit-kit)
-[![Coverage Status](https://img.shields.io/coveralls/thisconnect/nodegit-kit/master.svg?style=flat-square)](https://coveralls.io/github/thisconnect/nodegit-kit?branch=master)
-[![Dependencies](https://img.shields.io/david/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit)
-[![Dev Dependencies](https://img.shields.io/david/dev/thisconnect/nodegit-kit.svg?style=flat-square)](https://david-dm.org/thisconnect/nodegit-kit#info=devDependencies)
-[![MIT](https://img.shields.io/npm/l/nodegit-kit.svg?style=flat-square)](https://github.com/thisconnect/nodegit-kit/blob/master/license)
-[![NPM Version](https://img.shields.io/npm/v/nodegit-kit.svg?style=flat-square)](https://www.npmjs.com/package/nodegit-kit)
+[![Build Status](https://img.shields.io/travis/thisconnect/nodegit-kit/master.svg?style=flat-square&maxAge=1800)](https://travis-ci.org/thisconnect/nodegit-kit)
+[![Coverage Status](https://img.shields.io/coveralls/thisconnect/nodegit-kit/master.svg?style=flat-square&maxAge=1800)](https://coveralls.io/github/thisconnect/nodegit-kit?branch=master)
+[![Dependencies](https://img.shields.io/david/thisconnect/nodegit-kit.svg?style=flat-square&maxAge=1800)](https://david-dm.org/thisconnect/nodegit-kit)
+[![Dev Dependencies](https://img.shields.io/david/dev/thisconnect/nodegit-kit.svg?style=flat-square&maxAge=1800)](https://david-dm.org/thisconnect/nodegit-kit?type=dev)
+[![MIT](https://img.shields.io/npm/l/nodegit-kit.svg?style=flat-square&maxAge=1800)](https://github.com/thisconnect/nodegit-kit/blob/master/license)
+[![NPM Version](https://img.shields.io/npm/v/nodegit-kit.svg?style=flat-square&maxAge=1800)](https://www.npmjs.com/package/nodegit-kit)
 
 Promises for git commands such as `git init`,
 `git status`, `git add *`, `git diff`, `git log` and `git commit -am"commit message"`.
