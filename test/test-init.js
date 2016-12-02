@@ -94,7 +94,7 @@ test.serial('init without commit', function(t){
             return repo.getMasterCommit()
             .then(function(commit){
                 t.truthy(commit, 'has master commit');
-                t.deepEqual(oid, commit.id(), 'same Oid');
+                t.truthy(oid.equal(commit.id()), 'oid is equal');
             });
         });
     })
