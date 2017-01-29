@@ -50,7 +50,7 @@ test.serial('config test init with local user', function(t){
                     var author = commit.author();
                     t.is(author.name(), 'test', 'author name is test');
                     t.is(author.email(), 'test@localhost', 'author email is test@localhost');
-                    t.deepEqual(oid, commit.id(), 'same Oid');
+                    t.truthy(oid.equal(commit.id()), 'oid is equal');
                 });
                 history.on('end', function(commits){
                     t.truthy(commits, 'has commits');

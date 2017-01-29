@@ -1,7 +1,7 @@
 {
   "name": "nodegit-kit",
   "description": "Complementary NodeGit helpers returning native Promises, helps with git commands such as init, add, commit, status, diff",
-  "version": "0.9.0",
+  "version": "0.13.0",
   "main": "lib/main.js",
   "repository": {
     "type": "git",
@@ -25,15 +25,15 @@
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "debug": "^2.2.0",
+    "debug": "^2.3.3",
     "fildes": "^1.0.5",
-    "nodegit": "^0.13.0"
+    "nodegit": "^0.16.0"
   },
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.14.0",
-    "coveralls": "^2.11.9",
-    "fildes-extra": "^0.5.0",
-    "nyc": "^6.4.4"
+    "ava": "^0.17.0",
+    "coveralls": "^2.11.15",
+    "fildes-extra": "^0.6.0",
+    "nyc": "^10.0.0"
   }
 }
