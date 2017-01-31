@@ -3,6 +3,7 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
+      - libstdc++-4.9-dev
       - build-essential
       - libssl-dev
       - gcc-4.9-multilib
@@ -10,7 +11,6 @@ addons:
 after_success:
   - npm run coveralls
 before_install:
-  - export GYP_DEFINES="coverage=0 use_obsolete_asm=true";
   - export CC=/usr/bin/gcc-4.9;
   - export CXX=/usr/bin/g++-4.9;
   - git config --global user.name travis
