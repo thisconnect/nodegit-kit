@@ -27,7 +27,7 @@
   "dependencies": {
     "debug": "^2.3.3",
     "fildes": "^1.0.5",
-    "nodegit": "nodegit/nodegit"
+    "nodegit": "0.17.0"
   },
   "license": "MIT",
   "devDependencies": {
