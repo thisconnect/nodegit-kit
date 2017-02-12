@@ -245,3 +245,14 @@ test.serial('config get multiple global user configs', function(t){
         t.fail(error);
     });
 });
+
+
+test.serial('config get non-existent config key', function(t){
+    return git.config.get('core.fakekey')
+    .then(function(config){
+        t.fail('should not get non-existent config key');
+    })
+    .catch(function(error){
+        t.truthy(error, error);
+    });
+});
