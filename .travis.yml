@@ -4,15 +4,9 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - libstdc++-4.9-dev
-      - build-essential
-      - libssl-dev
-      - gcc-4.9-multilib
-      - g++-4.9-multilib
 after_success:
   - npm run coveralls
 before_install:
-  - export CC=/usr/bin/gcc-4.9;
-  - export CXX=/usr/bin/g++-4.9;
   - git config --global user.name travis
   - git config --global user.email travis@locahost
 install:
