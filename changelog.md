@@ -3,6 +3,7 @@
 ## v0.14.0
 
 - uses NodeGit 0.17.0
+- log now uses RevWalk internally
 - **breaking API change** `git.config.get` now rejects when getting non-existent key.
 
 ## v0.12.0

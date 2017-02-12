@@ -58,7 +58,7 @@ test.serial('commit log', function(t){
     return git.open(dir)
     .then(function(repo){
         return git.log(repo, {
-            sort: 'time'
+            sort: 'topological'
         })
         .then(function(history){
             t.truthy(Array.isArray(history), 'has history');
