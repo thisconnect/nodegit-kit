@@ -10,6 +10,7 @@ var dir = resolve(__dirname, 'repos/commits');
 test.serial('commit setup', function(t){
     return files.rmdir(dir)
     .catch(function(err){
+        console.log(err);
         t.fail(err);
     });
 });
@@ -46,8 +47,9 @@ test.serial('commit three times', function(t){
     .then(function(oid){
         t.pass('commited file');
     })
-    .catch(function(error){
-        t.fail(error);
+    .catch(function(err){
+        console.log(err);
+        t.fail(err);
     });
 });
 
@@ -56,7 +58,7 @@ test.serial('commit log', function(t){
     return git.open(dir)
     .then(function(repo){
         return git.log(repo, {
-            sort: 'time'
+            sort: 'topological'
         })
         .then(function(history){
             t.truthy(Array.isArray(history), 'has history');
@@ -64,8 +66,9 @@ test.serial('commit log', function(t){
             t.is(history.pop().message, 'initial commit', 'last entry is initial commit');
         });
     })
-    .catch(function(error){
-        t.fail(error);
+    .catch(function(err){
+        console.log(err);
+        t.fail(err);
     });
 });
 
@@ -82,8 +85,8 @@ test.serial('commit nothing', function(t){
             t.is(history.length, 4, 'still 4 commits');
         });
     })
-    .catch(function(error){
-        t.error(error);
+    .catch(function(err){
+        t.error(err);
         t.end();
     });
 });
@@ -130,6 +133,7 @@ test.serial('commit test log --abbrev-commit', function(t){
         });
     })
     .catch(function(err){
+        console.log(err);
         t.fail(err);
     });
 });

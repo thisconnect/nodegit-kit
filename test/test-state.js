@@ -38,9 +38,6 @@ test.serial('state setup', function(t){
             }),
             files.writeFile(file3, data3)
         ]);
-    })
-    .catch(function(err){
-        t.fail(err);
     });
 });
 
@@ -61,9 +58,6 @@ test.serial('state get status', function(t){
         t.truthy(status.some(function(file){
             return file.status == 'new' && file.path == 'file3.txt';
         }), 'file3.txt is new');
-    })
-    .catch(function(err){
-        t.fail(err);
     });
 });
 
@@ -92,9 +86,6 @@ test.serial('state get diff', function(t){
             t.is(change.hunks[0], hunk1, 'test hunk 1');
             t.is(change.hunks[1], hunk2, 'test hunk 2');
         });
-    })
-    .catch(function(err){
-        t.fail(err);
     });
 });
 
@@ -115,9 +106,6 @@ test.serial('state commit changes', function(t){
         .then(function(){
             return git.commit(repo, { message: 'appends to file1' });
         });
-    })
-    .catch(function(err){
-        t.fail(err);
     });
 });
 
@@ -186,18 +174,13 @@ test.serial('state diff commit', function(t){
             }
 
         });
-    })
-    .catch(function(err){
-        t.fail(err);
+        return changes;
     });
 });
 
 
 test.serial('state append but do not commit', function(t){
-    return files.appendFile(file1, 'i\nj\n')
-    .catch(function(err){
-        t.fail(err);
-    });
+    return files.appendFile(file1, 'i\nj\n');
 });
 
 
@@ -219,11 +202,9 @@ test.serial('state get diff HEAD~2', function(t){
                 t.is(diff.size, change.size, 'size is 20');
                 t.is(diff.oldsize, change.oldsize, 'oldsize is 8');
                 t.is(diff.hunks[0], change.hunks[0], change.hunks[0]);
+                return diff;
             });
         });
-    })
-    .catch(function(err){
-        t.fail(err);
     });
 });
 
@@ -267,9 +248,7 @@ test.serial('state get diff commit', function(t){
             }
 
         });
-    })
-    .catch(function(err){
-        t.fail(err);
+        return changes;
     });
 });
 

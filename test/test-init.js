@@ -15,8 +15,9 @@ test.serial('init setup', function(t){
         files.rmdir(bare),
         files.rmdir(manual)
     ])
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });
 
@@ -44,6 +45,7 @@ test.serial('init', function(t){
         t.truthy(repo, 'initialized repository');
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });
@@ -55,6 +57,7 @@ test.serial('init reinitialize', function(t){
         t.truthy(repo, 'reinitialized existing repository');
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });
@@ -68,6 +71,7 @@ test.serial('init bare', function(t){
         t.truthy(repo, 'initialized bare repository');
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });
@@ -99,6 +103,7 @@ test.serial('init without commit', function(t){
         });
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });

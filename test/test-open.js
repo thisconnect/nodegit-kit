@@ -9,8 +9,9 @@ var dir = resolve(__dirname, './repos/open');
 
 test.serial('open setup', function(t){
     return files.rmdir(dir)
-    .catch(function(err){
-        t.fail(err);
+    .catch(function(error){
+        console.log(error);
+        t.fail(error);
     });
 });
 
@@ -34,6 +35,7 @@ test.serial('open should create a new repo', function(t){
         t.truthy(repo, 'has repo');
     })
     .catch(function(error){
+        console.log(error);
         t.fail(error);
     });
 });
