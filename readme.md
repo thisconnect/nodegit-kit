@@ -1,6 +1,8 @@
 NodeGit-Kit
 -----------
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/thisconnect/nodegit-kit.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://img.shields.io/travis/thisconnect/nodegit-kit/master.svg?style=flat-square&maxAge=1800)](https://travis-ci.org/thisconnect/nodegit-kit)
 [![Coverage Status](https://img.shields.io/coveralls/thisconnect/nodegit-kit/master.svg?style=flat-square&maxAge=1800)](https://coveralls.io/github/thisconnect/nodegit-kit?branch=master)
 [![Dependencies](https://img.shields.io/david/thisconnect/nodegit-kit.svg?style=flat-square&maxAge=1800)](https://david-dm.org/thisconnect/nodegit-kit)
