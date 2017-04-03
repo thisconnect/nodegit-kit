@@ -133,6 +133,7 @@ Returns an Array of all commits.
 
 - `repo` NodeGit repository instance
 - `options`
+  - `branch` String name of a branch, defaults to 'master'
   - `sort` String can be 'none', 'topological', 'time' or 'reverse'
   - `abbrev-commit` Boolean if true shortens checksum, defaults to false
   - `abbrev` Number to specify a custom number of digits in combination with `abbrev-commit`, otherwise uses 'core.abbrev' config
