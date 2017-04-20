@@ -20,7 +20,8 @@
     "git"
   ],
   "scripts": {
-    "test": "ava --verbose ./test/test-*.js",
+    "pretest": "rimraf test/repos/*",
+    "test": "tape ./test/*.js | tap-spec",
     "coverage": "nyc npm test",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
@@ -31,9 +32,10 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "ava": "^0.18.2",
     "coveralls": "^2.13.0",
     "fildes-extra": "^0.6.0",
-    "nyc": "^10.2.0"
+    "nyc": "^10.2.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3"
   }
 }
