@@ -21,12 +21,16 @@ test('diff', t => {
   git.open(path, { init: false })
   .then(repo => {
     return Promise.all([
-      exec('git diff', { cwd: path }),
-      git.diff(repo)
+      git.diff(repo),
+      exec('git diff', { cwd: path })
     ])
-    .then(([diff, changes]) => {
+    .then(([changes, diff]) => {
       t.true(Array.isArray(changes), 'is array')
       t.equal(changes.length, 1, 'has 1 item')
+      t.equal(changes[0].status, 'modified', 'is modified')
+      t.equal(changes[0].path, 'file1.txt', 'is file1.txt')
+      t.equal(changes[0].size, 20, 'size 20')
+      t.equal(changes[0].oldsize, 16, 'oldsize 16')
       t.true(diff.includes(changes[0].hunks[0]), 'has hunk 1')
     })
   })
@@ -49,10 +53,10 @@ test('diff modified index', t => {
   git.open(path, { init: false })
   .then(repo => {
     return Promise.all([
-      exec('git diff', { cwd: path }),
-      git.diff(repo)
+      git.diff(repo),
+      exec('git diff', { cwd: path })
     ])
-    .then(([diff, changes]) => {
+    .then(([changes, diff]) => {
       t.true(Array.isArray(changes), 'is array')
       t.equal(changes.length, 2, 'has 2 item')
       let i = 0
@@ -60,6 +64,8 @@ test('diff modified index', t => {
         i++
         t.true('path' in change, `has path in change ${i}`)
         t.true('size' in change, `has size in change ${i}`)
+        t.true('sha' in change, `has sha in change ${i}`)
+        t.true('sha1' in change, `has sha1 in change ${i}`)
         t.true('status' in change, `has status in change ${i}`)
         t.true(change.hunks.length, `has ${change.hunks.length} hunks`)
         for (const hunk of change.hunks) {
@@ -72,7 +78,7 @@ test('diff modified index', t => {
   .catch(t.end)
 })
 
-test('diff two commits', t => {
+test('diff commits', t => {
   const path = resolve(__dirname, 'repos/diff-git')
 
   Promise.all([
@@ -83,17 +89,11 @@ test('diff two commits', t => {
     exec('git rev-list --max-parents=0 HEAD', { cwd: path })
   ])
   .then(([repo, head, head1, head2, first]) => {
-    // console.log('head', head)
-    // console.log('head1', head1)
-    // console.log('head2', head2)
-    // console.log('first', first)
     return Promise.all([
       git.diff(repo, first.trim(), head2.trim()),
       exec(`git diff ${first} ${head2}`, { cwd: path })
     ])
     .then(([changes, diff]) => {
-      // console.log(changes)
-      // console.log(diff)
       t.true(diff.includes(changes[0].path), `has path ${changes[0].path}`)
       t.true(diff.includes(changes[0].hunks[0]), 'has hunk')
     })
@@ -102,12 +102,9 @@ test('diff two commits', t => {
       exec(`git diff ${head2}`, { cwd: path })
     ]))
     .then(([changes, diff]) => {
-      console.log('==================================')
-      console.log(changes)
-      console.log('==================================')
-      console.log(diff)
-      console.log('==================================')
       t.true(diff.includes(changes[0].path), `has path ${changes[0].path}`)
+      t.true(diff.includes(changes[1].path), `has path ${changes[1].path}`)
+      // TODO: missing staged file3.txt
       t.true(diff.includes(changes[0].hunks[0]), 'has hunk')
       t.true(diff.includes(changes[1].hunks[0]), 'has hunk')
       t.true(diff.includes(changes[1].hunks[1]), 'has hunk')
@@ -117,41 +114,81 @@ test('diff two commits', t => {
       exec(`git diff HEAD~1`, { cwd: path })
     ]))
     .then(([changes, diff]) => {
-      // console.log(changes)
-      // console.log(diff)
       t.true(diff.includes(changes[0].hunks[0]), 'has hunk')
+    })
+    .then(() => Promise.all([
+      git.diff(repo, first.trim(), head.trim()),
+      git.diff(repo, first.slice(0, 10), head.slice(0, 10)),
+      exec(`git diff ${first} ${head}`, { cwd: path })
+    ]))
+    .then(([changes, changes1, diff]) => {
+      t.equal(changes[1].status, 'added', 'has added')
+      t.equal(changes[1].path, 'file3.txt', 'has file3.txt')
+      t.equal(changes[1].sha1, '0000000000000000000000000000000000000000')
+      t.true(!('oldsize' in changes[1]), 'no oldsize')
+      t.true(diff.includes(changes[1].hunks[0]), 'has hunk')
+      t.deepEqual(changes, changes1)
     })
   })
   .then(t.end)
   .catch(t.end)
 })
 
+test('diff setup moves files', t => {
+  exec('sh diff3.sh', { cwd: __dirname })
+  .then(stdout => {
+    t.pass('sh diff3.sh')
+    t.end()
+  })
+  .catch(t.end)
+})
 
-//
-//
-// var hunk1 = '@@ -1,7 +1,6 @@\n 1\n 2\n-3\n-4\n+3.1\n 5\n 6\n 7';
-// var hunk2 = '@@ -22,7 +21,7 @@\n 22\n 23\n 24\n-25\n+52\n 26\n 27\n 28';
-//
-//
-// test.serial('state get diff', function(t){
-//     return git.open(dir)
-//     .then(function(repo){
-//         return git.diff(repo);
-//     })
-//     .then(function(changes){
-//         t.truthy(Array.isArray(changes), 'changes is an Array');
-//         changes.forEach(function(change){
-//             t.truthy(change.path, 'has path');
-//             t.truthy(change.size, 'has size');
-//             t.truthy(change.status, 'has status');
-//
-//             if (change.status != 'modified') return;
-//             t.is(change.size, 78, 'size is 78');
-//             t.is(change.oldsize, 78, 'oldsize is 78');
-//             t.truthy(Array.isArray(change.hunks), 'hunks is an Array');
-//             t.truthy(change.hunks.length == 2, 'has 2 hunks');
-//             t.is(change.hunks[0], hunk1, 'test hunk 1');
-//             t.is(change.hunks[1], hunk2, 'test hunk 2');
-//         });
-//     });
-// });
+test('diff nothing', t => {
+  const path = resolve(__dirname, 'repos/diff-git')
+
+  git.open(path, { init: false })
+  .then(repo => {
+    return Promise.all([
+      git.diff(repo),
+      exec('git diff', { cwd: path })
+    ])
+    .then(([changes, diff]) => {
+      t.true(Array.isArray(changes), 'is array')
+      t.deepEqual(changes, [], 'has no item')
+      t.false(diff, 'no diff')
+    })
+  })
+  .then(t.end)
+  .catch(t.end)
+})
+
+// TODO: moved
+test.skip('diff commits', t => {
+  const path = resolve(__dirname, 'repos/diff-git')
+
+  Promise.all([
+    git.open(path, { init: false }),
+    exec('git rev-parse HEAD', { cwd: path }),
+    exec('git rev-parse HEAD~1', { cwd: path })
+  ])
+  .then(([repo, head, head1]) => {
+    return Promise.all([
+      git.diff(repo, head1.trim()),
+      exec(`git diff ${head1}`, { cwd: path })
+    ])
+    .then(([changes, diff]) => {
+      console.log(diff)
+      console.log(changes)
+    })
+    .then(() => Promise.all([
+      git.diff(repo, head1.trim(), head.trim()),
+      exec(`git diff ${head1} ${head}`, { cwd: path })
+    ]))
+    .then(([changes, diff]) => {
+      console.log(diff)
+      console.log(changes)
+    })
+  })
+  .then(t.end)
+  .catch(t.end)
+})
