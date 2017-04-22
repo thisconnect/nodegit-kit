@@ -8,9 +8,19 @@ const git = require('../')
 
 
 test('commit setup', t => {
-  exec('sh ./commit.sh', { cwd: __dirname })
+  exec('sh commit.sh', { cwd: __dirname })
   .then(stdout => {
     t.pass(stdout)
+  })
+  .then(() => Promise.all([
+    exec('pwd', { cwd: __dirname }),
+    exec('ls repos', { cwd: __dirname }),
+    exec('ls repos/commit-git', { cwd: __dirname })
+  ]))
+  .then(([pwd, ls, ls2]) => {
+    console.log(pwd)
+    console.log(ls)
+    console.log(ls2)
     t.end()
   })
   .catch(t.end)
