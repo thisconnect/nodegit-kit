@@ -19,7 +19,7 @@ test('commit setup', t => {
 test('commit on fresh git repo, missing initial commit', t => {
   const path = resolve(__dirname, './repos/commit-git')
 
-  git.open(path)
+  git.open(path, { init: false })
   .then(repo => {
     return git.commit(repo) // TODO: first commit bug?
     .catch(error => t.true(error instanceof Error, 'got error'))
