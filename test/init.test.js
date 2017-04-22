@@ -75,6 +75,7 @@ test('init without initial commit', t => {
     .then(stdout => t.fail(stdout))
     .catch(error => {
       const msg = 'fatal: your current branch \'master\' does not have any commits yet'
+      console.log(error.message)
       t.true(error.message.includes(msg), 'current branch does not have any commits')
       t.equal(error.cmd, 'git log', 'error.cmd was \'git log\'')
       t.equal(error.code, 128, 'is error.code 128')
