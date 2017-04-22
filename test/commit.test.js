@@ -8,8 +8,12 @@ const git = require('../')
 
 
 test('commit setup', t => {
-  exec('sh commit.sh', { cwd: __dirname })
-  .then(stdout => {
+  Promise.all([
+    exec('git --version'),
+    exec('sh commit.sh', { cwd: __dirname })
+  ])
+  .then(([version, stdout]) => {
+    t.pass(version)
     t.pass(stdout)
     t.end()
   })

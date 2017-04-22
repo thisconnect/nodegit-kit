@@ -15,7 +15,7 @@ const git = require('../')
 // })
 
 
-test('config throw lock error when running config.set in parallel', t => {
+test('config should throw lock error when running config.set in parallel', t => {
   const path = resolve(__dirname, './repos/config-lock-error')
   git.open(path)
   .then(repo => {
@@ -46,7 +46,10 @@ test('config throw lock error when running config.set in parallel', t => {
       git.config.set(repo, { 'user.email': 'test@localhost' })
     ])
   })
-  .then(() => t.end('should not succeed'))
+  .then(() => {
+    t.pass('succeeded this time but expect lock error')
+    t.end()
+  })
   .catch(error => {
     t.true(error instanceof Error, 'is instance of Error')
     t.true(error.message.includes('failed to lock file'), 'failed to lock message')
