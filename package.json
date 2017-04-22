@@ -20,10 +20,11 @@
     "git"
   ],
   "scripts": {
-    "pretest": "rimraf test/repos/*",
+    "pretest": "npm run clean && mkdir test/repos",
     "test": "tape ./test/*.js | tap-spec",
-    "coverage": "nyc npm test",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc --reporter=lcov npm test",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "clean": "rimraf test/repos"
   },
   "dependencies": {
     "debug": "^2.6.3",
