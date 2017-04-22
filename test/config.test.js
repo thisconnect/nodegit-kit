@@ -23,6 +23,12 @@ test('config throw lock error when running config.set in parallel', t => {
       git.config.set(repo, { 'user.name': 'test' }),
       git.config.set(repo, { 'user.name': 'test' }),
       git.config.set(repo, { 'user.name': 'test' }),
+      git.config.set(repo, { 'user.name': 'test' }),
+      git.config.set(repo, { 'user.name': 'test' }),
+      git.config.set(repo, { 'user.name': 'test' }),
+      git.config.set(repo, { 'user.email': 'test@localhost' }),
+      git.config.set(repo, { 'user.email': 'test@localhost' }),
+      git.config.set(repo, { 'user.email': 'test@localhost' }),
       git.config.set(repo, { 'user.email': 'test@localhost' }),
       git.config.set(repo, { 'user.email': 'test@localhost' }),
       git.config.set(repo, { 'user.email': 'test@localhost' })
