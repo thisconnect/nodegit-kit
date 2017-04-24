@@ -4,7 +4,7 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - libstdc++-4.9-dev
-after_success:
+script:
   - npm run coveralls
 before_install:
   - git config --global user.name travis
