@@ -30,8 +30,9 @@ test('config should throw lock error when running config.set in parallel', t => 
   })
   .catch(error => {
     t.true(error instanceof Error, 'is instance of Error')
-    t.true(error.message.includes('failed to lock file'), 'failed to lock message')
+    t.true(error.message.includes('failed'), 'error message contains failed')
     t.equal(error.errno, -14, 'errno -14')
+    t.pass(error.message.replace(__dirname, ''))
     t.end()
   })
 })
