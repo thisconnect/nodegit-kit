@@ -20,11 +20,12 @@
     "git"
   ],
   "scripts": {
-    "test": "npm run tape | tap-spec",
-    "pretape": "npm run clean",
-    "tape": "tape ./test/*.js",
-    "coverage": "nyc --reporter=lcov npm run tape",
-    "coveralls": "nyc --reporter=text-lcov npm run tape | coveralls",
+    "pretest": "npm run clean",
+    "test": "tape ./test/*.js | tap-spec",
+    "precoverage": "npm run clean",
+    "coverage": "nyc --reporter=lcov tape ./test/*.js",
+    "precoveralls": "npm run clean",
+    "coveralls": "nyc --reporter=text-lcov tape ./test/*.js | coveralls",
     "clean": "rimraf test/repos && mkdir test/repos"
   },
   "dependencies": {
