@@ -162,8 +162,7 @@ test('diff nothing', t => {
   .catch(t.end)
 })
 
-// TODO: moved
-test.skip('diff commits', t => {
+test('diff commits part II', t => {
   const path = resolve(__dirname, 'repos/diff-git')
 
   Promise.all([
@@ -177,16 +176,21 @@ test.skip('diff commits', t => {
       exec(`git diff ${head1}`, { cwd: path })
     ])
     .then(([changes, diff]) => {
-      console.log(diff)
-      console.log(changes)
+      t.true(changes.some(change => {
+        return change.path == 'file3.txt' && change.status == 'deleted'
+      }), 'file3.txt got removed')
+      // console.log(diff)
+      // console.log(changes)
+      // TODO: moved file2.txt to file4.txt
     })
     .then(() => Promise.all([
       git.diff(repo, head1.trim(), head.trim()),
       exec(`git diff ${head1} ${head}`, { cwd: path })
     ]))
     .then(([changes, diff]) => {
-      console.log(diff)
-      console.log(changes)
+      // TODO: moved file2.txt to file4.txt
+      // console.log(diff)
+      // console.log(changes)
     })
   })
   .then(t.end)
