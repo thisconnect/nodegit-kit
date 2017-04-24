@@ -22,10 +22,8 @@
   "scripts": {
     "pretest": "npm run clean",
     "test": "tape ./test/*.js | tap-spec",
-    "precoverage": "npm run clean",
-    "coverage": "nyc --reporter=lcov tape ./test/*.js",
-    "precoveralls": "npm run clean",
-    "coveralls": "nyc --reporter=text-lcov tape ./test/*.js | coveralls",
+    "coverage": "nyc npm test",
+    "coveralls": "nyc --reporter=text-lcov npm test | coveralls",
     "clean": "rimraf test/repos && mkdir test/repos"
   },
   "dependencies": {
