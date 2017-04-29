@@ -29,13 +29,13 @@
   "dependencies": {
     "debug": "^2.6.3",
     "fildes": "^1.0.5",
-    "nodegit": "^0.18.0"
+    "nodegit": "^0.18.3"
   },
   "license": "MIT",
   "devDependencies": {
-    "coveralls": "^2.13.0",
+    "coveralls": "^2.13.1",
     "fildes-extra": "^0.6.0",
-    "nyc": "^10.2.0",
+    "nyc": "^10.3.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.3"
   }
