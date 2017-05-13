@@ -24,6 +24,7 @@
     "test": "tape ./test/*.js | tap-spec",
     "coverage": "nyc npm test",
     "coveralls": "nyc --reporter=text-lcov npm test | coveralls",
+    "codecov": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "clean": "rimraf test/repos && mkdir test/repos"
   },
   "dependencies": {
