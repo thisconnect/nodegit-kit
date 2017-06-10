@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "debug": "^2.6.3",
-    "fildes": "^1.0.5",
+    "fildes": "^2.0.0",
     "nodegit": "^0.18.3"
   },
   "license": "MIT",
