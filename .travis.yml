@@ -4,21 +4,22 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - libstdc++-4.9-dev
-script:
-  - npm run coveralls
-before_install:
-  - git config --global user.name travis
-  - git config --global user.email travis@locahost
-cache:
-  directories:
-    - node_modules
-install:
-  - npm install
 language: node_js
 node_js:
   - '6'
-  - 'stable'
 os:
   - linux
   - osx
 sudo: false
+cache:
+  directories:
+    - node_modules
+before_install:
+  - git config --global user.name travis
+  - git config --global user.email travis@locahost
+install:
+  - npm install
+script:
+  - npm run coveralls
+after_success:
+  - npm run codecov
