@@ -13,6 +13,10 @@ install:
   - ps: Install-Product node $env:nodejs_version $env:platform
   - npm install
 
+before_test:
+  - git config --global user.name travis
+  - git config --global user.email travis@locahost
+
 test_script:
   - node --version
   - npm --version
