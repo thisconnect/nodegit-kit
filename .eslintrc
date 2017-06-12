@@ -1,7 +1,13 @@
 {
-    "rules": {
-        "semi": 2,
-        "quotes": [2, "single"]
-    },
-    "node": true
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "rules": {
+    "semi": 2,
+    "quotes": [2, "single"]
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  }
 }
