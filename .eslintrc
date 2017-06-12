@@ -3,7 +3,7 @@
     "ecmaVersion": 6
   },
   "rules": {
-    "semi": 2,
+    "semi": 0,
     "quotes": [2, "single"]
   },
   "env": {
