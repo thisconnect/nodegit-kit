@@ -25,11 +25,11 @@
     "precoverage": "npm run clean",
     "coverage": "nyc --reporter=lcov --reporter=text tape test/*.test.js",
     "codecov": "npm run coverage && codecov",
-    "clean": "rimraf test/repos && mkdir test/repos"
+    "clean": "rimraf ./test/repos && mkdirp ./test/repos"
   },
   "dependencies": {
     "debug": "^2.6.3",
-    "fildes": "^1.0.5",
+    "fildes": "^2.0.0",
     "nodegit": "^0.18.3"
   },
   "license": "MIT",
