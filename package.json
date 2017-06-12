@@ -25,7 +25,7 @@
     "precoverage": "npm run clean",
     "coverage": "nyc --reporter=lcov --reporter=text tape test/*.test.js",
     "codecov": "npm run coverage && codecov",
-    "clean": "rimraf test/repos && mkdir test/repos"
+    "clean": "rimraf ./test/repos && mkdirp ./test/repos"
   },
   "dependencies": {
     "debug": "^2.6.3",

@@ -1,0 +1,25 @@
+environment:
+  matrix:
+    - nodejs_version: "6"
+    - nodejs_version: "8"
+
+cache:
+  - node_modules
+
+platform:
+  - x64
+
+install:
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - npm install
+
+before_test:
+  - git config --global user.name travis
+  - git config --global user.email travis@locahost
+
+test_script:
+  - node --version
+  - npm --version
+  - npm run coverage
+
+build: off
