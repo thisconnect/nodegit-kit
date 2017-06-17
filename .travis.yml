@@ -4,6 +4,7 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - libstdc++-4.9-dev
+      - libssl-dev
 language: node_js
 node_js:
   - '6'
