@@ -28,7 +28,7 @@
     "clean": "rimraf ./test/repos && mkdirp ./test/repos"
   },
   "dependencies": {
-    "debug": "^2.6.3",
+    "debug": "^3.0.0",
     "fildes": "^2.0.0",
     "nodegit": "^0.18.3"
   },
