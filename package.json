@@ -28,16 +28,16 @@
     "clean": "rimraf ./test/repos && mkdirp ./test/repos"
   },
   "dependencies": {
-    "debug": "^2.6.3",
+    "debug": "^3.0.0",
     "fildes": "^2.0.0",
-    "nodegit": "^0.18.3"
+    "nodegit": "^0.20.2"
   },
   "license": "MIT",
   "devDependencies": {
-    "codecov": "^2.2.0",
+    "codecov": "^3.0.0",
     "fildes-extra": "^0.6.0",
-    "nyc": "^11.0.2",
+    "nyc": "^11.2.1",
     "tap-spec": "^4.1.1",
-    "tape": "^4.6.3"
+    "tape": "^4.8.0"
   }
 }
