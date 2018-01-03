@@ -10,6 +10,7 @@ addons:
 language: node_js
 node_js:
   - '6'
+  - '8'
 os:
   - linux
   - osx
@@ -21,6 +22,6 @@ before_install:
   - git config --global user.name travis
   - git config --global user.email travis@locahost
 install:
-  - npm install
+  - travis_retry npm install
 script:
   - npm run codecov
