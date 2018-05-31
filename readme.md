@@ -138,6 +138,7 @@ Returns an Array of all commits.
   - `sort` String can be 'none', 'topological', 'time' or 'reverse'
   - `abbrev-commit` Boolean if true shortens checksum, defaults to false
   - `abbrev` Number to specify a custom number of digits in combination with `abbrev-commit`, otherwise uses 'core.abbrev' config
+  - `max-count` Max number of commits to traverse
 
 ```javascript
 git.open('../repo-path/new/or/existing')
