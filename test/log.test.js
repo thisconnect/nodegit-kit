@@ -87,3 +87,20 @@ test('log --abbrev-commit', t => {
   })
   .catch(t.end)
 })
+
+
+test('log --max-count', t => {
+  const path = resolve(__dirname, './repos/log-git')
+
+  git.open(path)
+  .then(repo => {
+    return git.log(repo, {
+      'max-count': 2
+    })
+    .then(history => {
+      t.equal(history.length, 2, 'got 2 commits')
+      t.end()
+    })
+  })
+  .catch(t.end)
+})
