@@ -30,7 +30,7 @@
   "dependencies": {
     "debug": "^4.1.0",
     "fildes": "^2.0.0",
-    "nodegit": "^0.22.2"
+    "nodegit": "^0.23.0"
   },
   "license": "MIT",
   "devDependencies": {
