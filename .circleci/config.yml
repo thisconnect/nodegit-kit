@@ -10,6 +10,8 @@ jobs:
       - run: node --version
       - run: npm --version
       - run: npm install
+      - run: git config --global user.name travis
+      - run: git config --global user.email travis@locahost
       - run:
           name: Run tests
           command: npm test
@@ -23,6 +25,8 @@ jobs:
       - run: node --version
       - run: npm --version
       - run: npm install
+      - run: git config --global user.name travis
+      - run: git config --global user.email travis@locahost
       - run:
           name: Run tests
           command: npm test
