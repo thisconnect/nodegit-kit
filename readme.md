@@ -5,7 +5,6 @@ NodeGit-Kit
 [![Build Status](https://img.shields.io/appveyor/ci/thisconnect/nodegit-kit/master.svg?style=flat-square&maxAge=1800)](https://ci.appveyor.com/project/thisconnect/nodegit-kit)
 [![Coverage Status](https://img.shields.io/codecov/c/github/thisconnect/nodegit-kit/master.svg?style=flat-square&maxAge=1800)](https://codecov.io/gh/thisconnect/nodegit-kit)
 [![Dependencies](https://img.shields.io/librariesio/github/thisconnect/nodegit-kit.svg?style=flat-square&maxAge=1800)](https://libraries.io/github/thisconnect/nodegit-kit)
-[![Code](https://img.shields.io/bithound/code/github/thisconnect/nodegit-kit.svg?style=flat-square&maxAge=1800)](https://www.bithound.io/github/thisconnect/nodegit-kit)
 [![MIT](https://img.shields.io/npm/l/nodegit-kit.svg?style=flat-square&maxAge=1800)](https://github.com/thisconnect/nodegit-kit/blob/master/license)
 [![NPM Version](https://img.shields.io/npm/v/nodegit-kit.svg?style=flat-square&maxAge=1800)](https://www.npmjs.com/package/nodegit-kit)
 
