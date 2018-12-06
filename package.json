@@ -25,12 +25,15 @@
     "precoverage": "npm run clean",
     "coverage": "nyc --reporter=lcov --reporter=text tape test/*.test.js",
     "codecov": "npm run coverage && codecov",
-    "clean": "rimraf ./test/repos && mkdirp ./test/repos"
+    "clean": "rimraf ./test/repos && mkdirp ./test/repos",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "debug": "^4.1.0",
     "fildes": "^2.0.0",
-    "nodegit": "^0.23.0"
+    "nodegit": "^0.23.0",
+    "snyk": "^1.116.2"
   },
   "license": "MIT",
   "devDependencies": {
@@ -39,5 +42,6 @@
     "nyc": "^12.0.2",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1"
-  }
+  },
+  "snyk": true
 }
