@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt install build-essential libssl-dev gcc-4.9-multilib g++-4.9-multilib
+            sudo apt install build-essential libssl-dev
       - run: node --version
       - run: npm --version
       - run: npm install
