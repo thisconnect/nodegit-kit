@@ -7,6 +7,10 @@ jobs:
     working_directory: ~/nodegit-kit-8
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt install build-essential libssl-dev gcc-4.9-multilib g++-4.9-multilib
       - run: node --version
       - run: npm --version
       - run: npm install
@@ -22,6 +26,10 @@ jobs:
     working_directory: ~/nodegit-kit-10
     steps:
       - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt install build-essential libssl-dev gcc-4.9-multilib g++-4.9-multilib
       - run: node --version
       - run: npm --version
       - run: npm install
