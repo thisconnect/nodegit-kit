@@ -26,11 +26,11 @@ npm i --save nodegit-kit
 var git = require('nodegit-kit');
 
 git.open('../repo-path/new/or/existing')
-.then(function(repo){
+.then(repo => {
 
      // git diff
     return git.diff(repo)
-    .then(function(diff){
+    .then(diff => {
         console.log(diff);
 
         // git commit -am"commit message"
@@ -38,15 +38,15 @@ git.open('../repo-path/new/or/existing')
             'message': 'commit message'
         });
     })
-    .then(function(){
+    .then(_ => {
         // git log
         return git.log(repo);
     })
-    .then(function(log){
+    .then(log => {
         console.log(log);
     });
 })
-.catch(function(error){
+.catch(error => {
     console.error(error);
 });
 ```
@@ -78,10 +78,10 @@ Initializing is using [init](#init-path-options) internally.
 git.open('../repo-path/new/or/existing', {
     'init': false
 })
-.then(function(repo){
+.then(repo => {
     // NodeGit repository instance
 })
-.catch(function(){
+.catch(_ => {
     // no repo here
 });
 ```
@@ -97,12 +97,12 @@ Checks if status has pending changes, commits, returns Oid else returns null.
 
 ```javascript
 git.open('../repo-path/new/or/existing')
-.then(function(repo){
+.then(repo => {
     // git commit -am"a new commit"
     return git.commit(repo, {
         'message': 'a new commit'
     })
-    .then(function(oid){
+    .then(oid => {
         console.log(oid);
     });
 });
@@ -117,10 +117,10 @@ Returns an Array of changed files and their status.
 
 ```javascript
 git.open('../repo-path/new/or/existing')
-.then(function(repo){
+.then(repo => {
     // git status
     return git.status(repo)
-    .then(function(status){
+    .then(status => {
         console.log(status);
     });
 });
@@ -141,10 +141,10 @@ Returns an Array of all commits.
 
 ```javascript
 git.open('../repo-path/new/or/existing')
-.then(function(repo){
+.then(repo => {
     // git log
     return git.log(repo)
-    .then(function(log){
+    .then(log => {
         console.log(log);
     });
 });
@@ -159,10 +159,10 @@ Returns an Array of modified files and their diffs.
 
 ```javascript
 git.open('../repo-path/new/or/existing')
-.then(function(repo){
+.then(repo => {
     // git diff
     return git.diff(repo)
-    .then(function(diff){
+    .then(diff => {
         console.log(diff);
     });
 });
@@ -173,16 +173,16 @@ git.open('../repo-path/new/or/existing')
 
 ```javascript
 git.open('../repo-path/new/or/existing')
-.then(function(repo){
+.then(repo => {
     return git.log(repo)
-    .then(function(history){
+    .then(history => {
         return history[0].commit;
     })
-    .then(function(commit){
+    .then(commit => {
         // git diff <commit>
         return git.diff(repo, commit);
     })
-    .then(function(diff){
+    .then(diff => {
         console.log(diff);
     });
 });
@@ -196,15 +196,15 @@ Changed order of `from` and `to` to be aligned with git-cli.
 
 ```javascript
 git.open('../repo-path/new/or/existing')
-.then(function(repo){
+.then(repo => {
     return git.log(repo, { sort: 'reverse' })
-    .then(function(history){
+    .then(history => {
         var commit1 = history[0].commit;
         var commit2 = history[2].commit;
         // git diff <from> <to>
         return git.diff(repo, commit1, commit2);
     })
-    .then(function(diff){
+    .then(diff => {
         console.log(diff);
     });
 });
@@ -234,7 +234,7 @@ Set user name and email similar to `cd repo` then
 
 ```javascript
 git.open('my/repository')
-.then(function(repo){
+.then(repo => {
     return git.config.set(repo, {
         'user.name': 'John Doe',
         'user.email': 'johndoe@example.com'
@@ -251,10 +251,10 @@ Similar to `cd repo` then`git config user.name` returns config for a repository 
 
 ```javascript
 git.open('my/repository')
-.then(function(repo){
+.then(repo => {
     return git.config.get(repo, ['user.name', 'user.email']);
 })
-.then(function(configs){
+.then(configs => {
     // [ 'John Doe', 'johndoe@example.com' ]
 });
 ```
@@ -267,7 +267,7 @@ When no repo is given, setting and getting config will operate in `--global` mod
 
 ```javascript
 git.config.get(['user.name', 'user.email'])
-.then(function(config){
+.then(config => {
     // [ 'John Doe', 'johndoe@example.com' ]
 });
 ```
@@ -300,7 +300,7 @@ git.init('../repo-path/new/or/existing', {
     'commit': true,
     'message': 'my first commit'
 })
-.then(function(repo){
+.then(repo => {
     // NodeGit repository instance
 });
 ```
@@ -320,21 +320,21 @@ Can be used to in combination with suppressing commit on init.
 git.open('../path/to/repo', {
     'init': false
 })
-.catch(function(){
+.catch(_ => {
     return git.init('../path/to/repo', {
         'commit': false
     })
-    .then(function(repo){
+    .then(repo => {
         // do something before first commit
         return repo;
     })
-    .then(function(repo){
+    .then(repo => {
         git.init.commit(repo, {
             'message': 'initialize repository'
         });
     });
 })
-.then(function(repo){
+.then(repo => {
     // NodeGit repository instance
 });
 ```
