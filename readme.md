@@ -38,7 +38,7 @@ git.open('../repo-path/new/or/existing')
             'message': 'commit message'
         });
     })
-    .then(_ => {
+    .then(() => {
         // git log
         return git.log(repo);
     })
@@ -81,7 +81,7 @@ git.open('../repo-path/new/or/existing', {
 .then(repo => {
     // NodeGit repository instance
 })
-.catch(_ => {
+.catch(err => {
     // no repo here
 });
 ```
@@ -320,7 +320,7 @@ Can be used to in combination with suppressing commit on init.
 git.open('../path/to/repo', {
     'init': false
 })
-.catch(_ => {
+.catch(err => {
     return git.init('../path/to/repo', {
         'commit': false
     })
