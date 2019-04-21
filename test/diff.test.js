@@ -5,6 +5,7 @@ const { resolve } = require('path')
 const exec = require('./utils/exec.js')
 const git = require('../')
 
+const path = resolve(__dirname, 'repos/diff-git')
 
 test('diff setup', t => {
   exec('sh diff1.sh', { cwd: __dirname })
@@ -16,8 +17,6 @@ test('diff setup', t => {
 })
 
 test('diff', t => {
-  const path = resolve(__dirname, 'repos/diff-git')
-
   git.open(path, { init: false })
   .then(repo => {
     return Promise.all([
@@ -48,8 +47,6 @@ test('diff change setup', t => {
 })
 
 test('diff modified index', t => {
-  const path = resolve(__dirname, 'repos/diff-git')
-
   git.open(path, { init: false })
   .then(repo => {
     return Promise.all([
@@ -79,8 +76,6 @@ test('diff modified index', t => {
 })
 
 test('diff commits', t => {
-  const path = resolve(__dirname, 'repos/diff-git')
-
   Promise.all([
     git.open(path, { init: false }),
     exec('git rev-parse HEAD', { cwd: path }),
@@ -111,7 +106,7 @@ test('diff commits', t => {
     })
     .then(() => Promise.all([
       git.diff(repo, 'HEAD~1'),
-      exec(`git diff HEAD~1`, { cwd: path })
+      exec('git diff HEAD~1', { cwd: path })
     ]))
     .then(([changes, diff]) => {
       t.true(diff.includes(changes[0].hunks[0]), 'has hunk')
@@ -143,9 +138,27 @@ test('diff setup moves files', t => {
   .catch(t.end)
 })
 
-test('diff nothing', t => {
-  const path = resolve(__dirname, 'repos/diff-git')
+test('diff --name-only', t => {
+    Promise.all([
+      git.open(path, { init: false }),
+      exec('git rev-parse HEAD', { cwd: path }),
+      exec('git rev-parse HEAD~2', { cwd: path })
+    ])
+    .then(([repo, head, head4]) => {
+      return git.diff(repo, head4.trim(), head.trim(), {
+        'name-only': true
+      })
+    })
+    .then((filenames) => {
+      t.true(Array.isArray(filenames), 'is array')
+      t.equal(filenames.length, 3, 'has 3 items')
+      t.equal(filenames[2], 'file3.txt', '3rd item is file3.txt')
+    })
+    .then(t.end)
+    .catch(t.end)
+})
 
+test('diff nothing', t => {
   git.open(path, { init: false })
   .then(repo => {
     return Promise.all([
@@ -163,8 +176,6 @@ test('diff nothing', t => {
 })
 
 test('diff commits part II', t => {
-  const path = resolve(__dirname, 'repos/diff-git')
-
   Promise.all([
     git.open(path, { init: false }),
     exec('git rev-parse HEAD', { cwd: path }),

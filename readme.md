@@ -150,19 +150,21 @@ git.open('../repo-path/new/or/existing')
 ```
 
 
-### diff (repo[, commit[, commit]])
+### diff (repo[, commit[, commit]][, options])
 
 Returns an Array of modified files and their diffs.
 
 - `repo` NodeGit repository instance
+- `options`
+  - `name-only` Boolean return only filenames, defaults to false
 
 ```javascript
 git.open('../repo-path/new/or/existing')
 .then(repo => {
     // git diff
-    return git.diff(repo)
-    .then(diff => {
-        console.log(diff);
+    return git.diff(repo, { 'name-only': true })
+    .then(filenames => {
+        console.log(filenames);
     });
 });
 ```
