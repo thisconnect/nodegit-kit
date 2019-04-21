@@ -142,19 +142,21 @@ test('diff --name-only', t => {
     Promise.all([
       git.open(path, { init: false }),
       exec('git rev-parse HEAD', { cwd: path }),
-      exec('git rev-parse HEAD~2', { cwd: path })
+      exec('git rev-parse HEAD~2', { cwd: path }),
+      exec('git diff HEAD~2 HEAD --name-only --find-renames=90', { cwd: path })
     ])
-    .then(([repo, head, head4]) => {
-      return git.diff(repo, head4.trim(), head.trim(), {
+    .then(([repo, head, head2, files]) => {
+      return git.diff(repo, head2.trim(), head.trim(), {
         'name-only': true
       })
+      .then((filenames) => {
+        t.true(Array.isArray(filenames), 'is array')
+        t.equal(filenames.length, 3, 'has 3 items')
+        t.equal(filenames[2], 'file4.txt', '3rd item is file4.txt')
+        t.deepEqual(filenames, files.split('\n'), 'equals the cli result list')
+        t.end()
+      })
     })
-    .then((filenames) => {
-      t.true(Array.isArray(filenames), 'is array')
-      t.equal(filenames.length, 3, 'has 3 items')
-      t.equal(filenames[2], 'file3.txt', '3rd item is file3.txt')
-    })
-    .then(t.end)
     .catch(t.end)
 })
 
@@ -199,9 +201,12 @@ test('diff commits part II', t => {
       exec(`git diff ${head1} ${head}`, { cwd: path })
     ]))
     .then(([changes, diff]) => {
+      // $ git diff HEAD~1 HEAD
       // TODO: moved file2.txt to file4.txt
       // console.log(diff)
       // console.log(changes)
+      // rename from file2.txt
+      // rename to file4.txt
     })
   })
   .then(t.end)
