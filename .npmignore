@@ -1,5 +1,7 @@
+.circleci/config.yml
 coverage
 .nyc_output
 npm-debug.log
 test
 .travis.yml
+
