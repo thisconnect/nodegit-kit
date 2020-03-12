@@ -28,7 +28,7 @@
     "clean": "rimraf ./test/repos && mkdirp ./test/repos"
   },
   "dependencies": {
-    "fildes": "^3.0.0",
+    "fildes": "^3.1.0",
     "nodegit": "^0.26.0"
   },
   "license": "MIT",
